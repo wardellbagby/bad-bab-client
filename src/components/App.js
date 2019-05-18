@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from '../assets/logo.svg';
 import '../style/App.css';
+import MemberList from '../containers/MemberList';
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
         >
           Learn React
         </a>
+
+        <MemberList />
       </header>
     </div>
   );
