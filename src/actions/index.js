@@ -32,11 +32,11 @@ export function requestPlayers() {
 }
 
 function getRequest(MODEL) {
-    return axios.get(BASE_URL+model)
+    return axios.get(BASE_URL + MODEL)
 }
 
 export function updateSession(startingSession) {
-    if (startingSession){
+    if (startingSession) {
 
     }
 }
