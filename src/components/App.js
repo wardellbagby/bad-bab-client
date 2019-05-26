@@ -2,6 +2,7 @@ import React from 'react';
 import logo from '../assets/logo.svg';
 import '../style/App.css';
 import MemberList from '../containers/MemberList';
+import PlayerList from '../containers/PlayerList';
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
           Learn React
         </a>
 
-        <MemberList />
+        {/* <MemberList /> */}
+        <PlayerList />
       </header>
     </div>
   );
