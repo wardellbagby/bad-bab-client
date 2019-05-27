@@ -2,7 +2,8 @@ import React from 'react';
 import logo from '../assets/logo.svg';
 import '../style/App.css';
 import MemberList from '../containers/MemberList';
-import PlayerList from '../containers/PlayerList';
+import PlayerSelector from '../containers/PlayerSelector';
+import SelectedPlayerList from '../containers/SelectedPlayerList';
 
 function App() {
   return (
@@ -22,7 +23,8 @@ function App() {
         </a>
 
         {/* <MemberList /> */}
-        <PlayerList />
+        <SelectedPlayerList />
+        <PlayerSelector />
       </header>
     </div>
   );
