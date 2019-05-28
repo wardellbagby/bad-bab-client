@@ -4,9 +4,6 @@ export default function (state = { members: [], players: [], deleted: [] }, acti
     let payload;
 
     switch (action.type) {
-        case SELECT_PLAYER:
-            return { ...state, players: [...state.players] };
-
         case FETCH_PLAYERS:
             // do player stuff here
             payload = action.payload;

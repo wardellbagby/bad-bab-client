@@ -7,14 +7,9 @@ export default function PlayerSelect({ player }) {
     const selectedPlayers = useSelector(state => state.selected.players)
     const dispatch = useDispatch();
 
-    const handleSelectPlayer = () => {
-        dispatch(selectPlayer(player));
-        dispatch(deletePlayer(player));
-    }
+    const handleSelectPlayer = () => dispatch(selectPlayer(player));
 
-    const checked = _.has(selectedPlayers, player._id)
-
-    console.log(player.playerName + " : " + checked)
+    const checked = _.has(selectedPlayers, player._id);
 
     return (
         <span>
