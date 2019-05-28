@@ -9,13 +9,18 @@ export default function PlayerSelect({ player }) {
 
     const handleSelectPlayer = () => dispatch(selectPlayer(player));
 
-    const checked = _.has(selectedPlayers, player._id);
+    const selected = _.has(selectedPlayers, player._id);
 
     return (
         <span>
-            <input type="checkbox" name="playerSelect" value={player.id} onChange={handleSelectPlayer} checked={checked} />
-            {player.playerName}
-            <br />
+            <button
+                type="button"
+                value={player._id}
+                onClick={handleSelectPlayer}
+                className={"mr-1 shadow-sm btn btn-" + (selected ? "" : "outline-") + "secondary"}
+            >
+                {player.playerName}
+            </button>
         </span>
     )
 }

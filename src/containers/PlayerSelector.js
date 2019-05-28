@@ -16,7 +16,7 @@ export default function PlayerSelector() {
   return (
     <div className="playerSelector">
       {players.map(player => (
-        <PlayerSelect player={player} />
+        <PlayerSelect player={player} key={player._id}/>
       ))}
     </div>
   );
