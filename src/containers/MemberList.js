@@ -14,7 +14,7 @@ function MemberList() {
     <div className="Memberlist">
       {members.map(member => (
         <div key={member.slackId}>
-          {member.playerName}
+          {member.name}
         </div>
       ))}
     </div>

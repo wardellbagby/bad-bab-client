@@ -9,7 +9,7 @@ export default function SelectedPlayerList() {
     <div className="SelectedPlayerList">
       {players.map(player => (
         <div key={player.slackId}>
-          Selected ({player.playerName} : {player.password})
+          Selected ({player.name} : {player.password})
         </div>
       ))}
     </div>

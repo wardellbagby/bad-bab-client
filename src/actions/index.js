@@ -12,6 +12,7 @@ export const FETCH_PLAYERS = 'FETCH_PLAYERS';
 export const FETCH_COURTS = 'FETCH_COURTS';
 export const FETCH_SESSIONS = 'FETCH_SESSIONS';
 export const SELECT_PLAYER = 'SELECT_PLAYER';
+export const FILTER_PLAYER = 'FILTER_PLAYER';
 
 
 export function requestMembers() {
@@ -46,5 +47,12 @@ export function selectPlayer(player) {
     return {
         type: SELECT_PLAYER,
         payload: player
+    };
+}
+
+export function playerFilterChanged(playerText) {
+    return {
+        type: FILTER_PLAYER,
+        payload: playerText
     };
 }

@@ -18,7 +18,7 @@ export default function PlayerSelect({player}) {
             onClick={handleSelectPlayer}
             className={"mr-1 mb-1 btn btn-" + (selected ? "" : "outline-") + "secondary"}
         >
-            {player.playerName}
+            {player.name}
         </button>
     )
 }
