@@ -9,14 +9,14 @@ export default function PlayerSelect({player}) {
 
     const handleSelectPlayer = () => dispatch(selectPlayer(player));
 
-    const selected = _.has(selectedPlayers, player._id);
+    const btnStyle = _.has(selectedPlayers, player._id) ? "btn-secondary" : "btn-outline-secondary";
 
     return (
         <button
             type="button"
             value={player._id}
             onClick={handleSelectPlayer}
-            className={"mr-1 mb-1 btn btn-" + (selected ? "" : "outline-") + "secondary"}
+            className={`mr-1 mb-1 btn ${btnStyle}`}
         >
             {player.name}
         </button>

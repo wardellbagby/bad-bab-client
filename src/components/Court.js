@@ -8,7 +8,7 @@ export default function Court({court}) {
 
     const caretDirection = paneIsVisible ? "down" : "left";
 
-    const collapse = paneIsVisible ? "show" : "";
+    const collapseClass = paneIsVisible ? "collapse show" : "collapse";
 
     return (
         <div className="form-row card bg-secondary">
@@ -20,7 +20,7 @@ export default function Court({court}) {
                 </h5>
             </a>
 
-            <div className={`collapse ${collapse}`}>
+            <div className={collapseClass}>
                 <div className="card-body py-3">
                     {court.reservations.map(reservation => (
                         <div>
