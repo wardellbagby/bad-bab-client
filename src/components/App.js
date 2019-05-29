@@ -7,7 +7,7 @@ import SelectedPlayerList from '../containers/SelectedPlayerList';
 
 function App() {
   return (
-    <div className="App bg-dark flex">
+    <div className="App">
         <SelectedPlayerList />
         <PlayerSelector />
     </div>
