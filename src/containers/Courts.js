@@ -15,7 +15,7 @@ export default function Courts() {
     return (
         <div className="courts bg-dark card btn-group border-secondary">
             <div className="card-header bg-secondary text-light">
-                Courts
+                <h5 className="mb-0">Courts</h5>
             </div>
 
             <div className="card-body">

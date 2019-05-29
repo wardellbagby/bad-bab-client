@@ -17,7 +17,7 @@ export default function PlayerSelector() {
     return (
         <div className="player-selector bg-dark card btn-group border-secondary">
             <div className="card-header bg-secondary text-light">
-                Players
+                <h5 class="mb-0">Players</h5>
             </div>
 
             <div className="card-body">
