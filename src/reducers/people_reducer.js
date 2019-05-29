@@ -1,10 +1,11 @@
-import {FETCH_PLAYERS, FETCH_MEMBERS, FILTER_PLAYER} from "../actions/index";
+import {FETCH_PLAYERS, FETCH_MEMBERS, FILTER_PLAYER, FILTER_MEMBER} from "../actions/index";
 import _ from 'lodash';
 
 const defaultState = {
     members: [],
     players: [],
-    filteredPlayers: null
+    filteredPlayers: null,
+    filteredMembers : null
 };
 
 export default function (state = defaultState, action) {
@@ -15,7 +16,11 @@ export default function (state = defaultState, action) {
             // do player stuff here
             payload = action.payload;
 
-            const players = payload && payload.data && payload.data.players ? payload.data.players : [];
+            let players = payload && payload.data && payload.data.players ? payload.data.players : [];
+
+            players = _.sortBy(players, (player) => player.name);
+
+            players = _.each(players, (player) => player.name = _.startCase(player.name));
 
             return {...state, players};
 
@@ -30,16 +35,26 @@ export default function (state = defaultState, action) {
             return {...state, members};
 
         case FILTER_PLAYER:
-            const nameFilter = action.payload;
+            const playerNameFilter = action.payload;
             let filteredPlayers;
 
-            if (_.isEmpty(nameFilter)) {
+            if (_.isEmpty(playerNameFilter)) {
                 filteredPlayers = null;
             } else {
-                filteredPlayers = _.filter(state.members, nameContainsFilter(_.toLower(nameFilter)));
+                filteredPlayers = _.filter(state.players, nameContainsFilter(_.toLower(playerNameFilter)));
             }
 
-            return {...state, filteredPlayers}
+            return {...state, filteredPlayers};
+
+        case FILTER_MEMBER:
+            const memberNameFilter = action.payload;
+            let filteredMembers = null;
+
+            if (!_.isEmpty(memberNameFilter)) {
+                filteredMembers = _.filter(state.members, nameContainsFilter(_.toLower(memberNameFilter)));
+            }
+
+            return {...state, filteredMembers};
     }
 
     return state;

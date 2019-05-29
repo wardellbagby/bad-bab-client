@@ -14,8 +14,12 @@ export const FETCH_MEMBERS = 'FETCH_MEMBERS';
 export const FETCH_PLAYERS = 'FETCH_PLAYERS';
 export const FETCH_COURTS = 'FETCH_COURTS';
 export const FETCH_SESSIONS = 'FETCH_SESSIONS';
+
 export const SELECT_PLAYER = 'SELECT_PLAYER';
+export const SELECT_MEMBER = 'SELECT_MEMBER';
+
 export const FILTER_PLAYER = 'FILTER_PLAYER';
+export const FILTER_MEMBER = 'FILTER_MEMBER';
 
 
 export function requestMembers() {
@@ -65,9 +69,24 @@ export function selectPlayer(player) {
     };
 }
 
+export function selectMember(member) {
+    return {
+        type: SELECT_MEMBER,
+        payload: member
+    };
+}
+
 export function playerFilterChanged(playerText) {
     return {
         type: FILTER_PLAYER,
         payload: playerText
+    };
+}
+
+
+export function memberFilterChanged(memberText) {
+    return {
+        type: FILTER_MEMBER,
+        payload: memberText
     };
 }

@@ -1,7 +1,6 @@
 import React from 'react';
-import logo from '../assets/logo.svg';
 import '../style/App.css';
-import MemberList from '../containers/MemberList';
+import MemberSelector from '../containers/MemberSelector';
 import PlayerSelector from '../containers/PlayerSelector';
 import SelectedPlayerList from '../containers/SelectedPlayerList';
 import Courts from "../containers/Courts";
@@ -12,6 +11,7 @@ function App() {
         <SelectedPlayerList />
         <PlayerSelector />
         <Courts />
+        <MemberSelector />
     </div>
   );
 }
