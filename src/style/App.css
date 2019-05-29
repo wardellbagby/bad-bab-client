@@ -31,3 +31,11 @@
     /*transform: rotate(360deg);*/
   /*}*/
 /*}*/
+.card {
+    padding: 10px;
+    margin: 5px 10px;
+}
+
+.card-body {
+    padding-bottom: 0;
+}

@@ -1,4 +1,7 @@
 import axios from "axios";
+import sampleCourtData from '../sample-data/courts'
+import samplePlayerData from '../sample-data/players'
+import sampleMemberData from '../sample-data/members'
 
 const BASE_URL = "https://bab.moepas.com/api/";
 
@@ -16,7 +19,8 @@ export const FILTER_PLAYER = 'FILTER_PLAYER';
 
 
 export function requestMembers() {
-    const request = getRequest(MEMBERS);
+    // const request = getRequest(MEMBERS);
+    const request = {data: sampleMemberData};
 
     return {
         type: FETCH_MEMBERS,
@@ -25,10 +29,21 @@ export function requestMembers() {
 }
 
 export function requestPlayers() {
-    const request = getRequest(PLAYERS);
+    // const request = getRequest(PLAYERS);
+    const request = {data: samplePlayerData};
 
     return {
         type: FETCH_PLAYERS,
+        payload: request
+    };
+}
+
+export function requestCourts() {
+    // const request = getRequest(COURTS);
+    const request = {data: sampleCourtData};
+
+    return {
+        type: FETCH_COURTS,
         payload: request
     };
 }
