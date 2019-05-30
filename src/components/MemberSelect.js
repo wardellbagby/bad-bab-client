@@ -4,7 +4,7 @@ import {selectMember} from "../actions";
 import _ from 'lodash';
 
 export default function MemberSelect({member}) {
-    const selectedMembers = useSelector(state => state.selected.member)
+    const selectedMembers = useSelector(state => state.selected.members)
     const dispatch = useDispatch();
 
     const handleSelectMember = () => dispatch(selectMember(member));

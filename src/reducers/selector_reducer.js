@@ -1,14 +1,19 @@
-import { SELECT_PLAYER } from "../actions/index";
+import {SELECT_PLAYER, SELECT_MEMBER} from "../actions/index";
 import _ from 'lodash';
 
-export default function (state = { players: {} }, action) {
+export default function (state = {players: {}}, action) {
 
     switch (action.type) {
         case SELECT_PLAYER:
             const player = action.payload;
-            const players = updatePlayerId({ ...state.players }, player);
+            const players = updatePlayerId({...state.players}, player);
 
-            return { ...state, players };
+            return {...state, players};
+        case SELECT_MEMBER:
+            const member = action.payload;
+            const members = updatePlayerId({...state.members}, member);
+
+            return {...state, members};
     }
 
     return state;
