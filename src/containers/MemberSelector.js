@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {requestMembers, memberFilterChanged} from "../actions";
+import {useDispatch, useSelector} from 'react-redux';
+import {memberFilterChanged, requestMembers} from "../actions";
 import MemberSelect from "../components/MemberSelect";
 import Card from "./Card";
 import MemberPasswordForm from "../components/MemberPasswordForm";
@@ -27,7 +27,7 @@ export default function MemberSelector() {
     return (
         <Card title="Members">
             {members.map(member => (
-                <MemberSelect member={member} key={member._id}/>
+                <MemberSelect member={member} key={member._id} highlighted={member.isNew}/>
             ))}
 
             <input type="text"

@@ -1,11 +1,11 @@
-import {FETCH_PLAYERS, FETCH_MEMBERS, FILTER_PLAYER, FILTER_MEMBER} from "../actions/index";
+import {FETCH_PLAYERS, FETCH_MEMBERS, FILTER_PLAYER, FILTER_MEMBER, CANCEL_MEMBER_CREATE} from "../actions/index";
 import _ from 'lodash';
 
 const defaultState = {
     members: [],
     players: [],
     filteredPlayers: null,
-    filteredMembers : null
+    filteredMembers: null
 };
 
 export default function (state = defaultState, action) {
@@ -58,6 +58,9 @@ export default function (state = defaultState, action) {
 
 
             return {...state, filteredMembers};
+
+        case CANCEL_MEMBER_CREATE:
+            return {...state, filteredMembers: null};
     }
 
     return state;

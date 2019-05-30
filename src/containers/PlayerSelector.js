@@ -16,7 +16,7 @@ export default function PlayerSelector() {
     const updateFilter = (event) => dispatch(playerFilterChanged(event.target.value));
 
     return (
-        <Card title="Player">
+        <Card title="Players">
             {players.map(player => (
                 <PlayerSelect player={player} key={player._id}/>
             ))}

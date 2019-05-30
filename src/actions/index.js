@@ -17,6 +17,7 @@ export const FETCH_SESSIONS = 'FETCH_SESSIONS';
 
 export const SELECT_PLAYER = 'SELECT_PLAYER';
 export const SELECT_MEMBER = 'SELECT_MEMBER';
+export const SELECT_PASSWORD = 'SELECT_PASSWORD';
 
 export const FILTER_PLAYER = 'FILTER_PLAYER';
 export const FILTER_MEMBER = 'FILTER_MEMBER';
@@ -75,6 +76,14 @@ export function selectMember(member) {
     return {
         type: SELECT_MEMBER,
         payload: member
+    };
+}
+
+export const selectPassword = (chosenMember) => (password) => {
+    // todo: run call to create a player here, maybe change function name
+    return {
+        type: SELECT_PASSWORD,
+        payload: password
     };
 }
 

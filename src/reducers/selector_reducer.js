@@ -1,7 +1,7 @@
-import {SELECT_PLAYER, SELECT_MEMBER, CANCEL_MEMBER_CREATE} from "../actions/index";
+import {SELECT_PLAYER, SELECT_MEMBER, CANCEL_MEMBER_CREATE, SELECT_PASSWORD} from "../actions/index";
 import _ from 'lodash';
 
-export default function (state = {players: {}, memberToCreate: null}, action) {
+export default function (state = {players: {}, memberToCreate: null, password: null}, action) {
 
 
     switch (action.type) {
@@ -14,6 +14,12 @@ export default function (state = {players: {}, memberToCreate: null}, action) {
             const member = action.payload;
 
             return {...state, memberToCreate: member};
+
+        case SELECT_PASSWORD:
+            const password = action.payload;
+
+            return {...state, password};
+
         case CANCEL_MEMBER_CREATE:
             return {...state, memberToCreate: null};
     }

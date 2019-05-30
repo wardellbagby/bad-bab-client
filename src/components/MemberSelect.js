@@ -1,18 +1,17 @@
-import React, {useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import React from 'react';
+import {useDispatch} from 'react-redux';
 import {selectMember} from "../actions";
-import _ from 'lodash';
 
-export default function MemberSelect({member, selected}) {
+export default function MemberSelect({member, highlighted}) {
     const dispatch = useDispatch();
 
     const handleSelectMember = () => {
-        if (!selected) {
+        if (!highlighted) {
             dispatch(selectMember(member));
         }
     };
 
-    const btnStyle = (selected || member.isNew) ? "btn-secondary" : "btn-outline-secondary";
+    const btnStyle = highlighted ? "btn-secondary" : "btn-outline-secondary";
 
     let displayName = member.isNew ? `Create password for: "${member.name}"` : member.name;
 
