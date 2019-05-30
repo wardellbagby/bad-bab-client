@@ -52,7 +52,10 @@ export default function (state = defaultState, action) {
 
             if (!_.isEmpty(memberNameFilter)) {
                 filteredMembers = _.filter(state.members, nameContainsFilter(_.toLower(memberNameFilter)));
+
+                filteredMembers.push({name: memberNameFilter, _id: "searchedMember", isNew: true});
             }
+
 
             return {...state, filteredMembers};
     }

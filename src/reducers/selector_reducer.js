@@ -1,7 +1,8 @@
-import {SELECT_PLAYER, SELECT_MEMBER} from "../actions/index";
+import {SELECT_PLAYER, SELECT_MEMBER, CANCEL_MEMBER_CREATE} from "../actions/index";
 import _ from 'lodash';
 
-export default function (state = {players: {}}, action) {
+export default function (state = {players: {}, memberToCreate: null}, action) {
+
 
     switch (action.type) {
         case SELECT_PLAYER:
@@ -11,9 +12,10 @@ export default function (state = {players: {}}, action) {
             return {...state, players};
         case SELECT_MEMBER:
             const member = action.payload;
-            const members = updatePlayerId({...state.members}, member);
 
-            return {...state, members};
+            return {...state, memberToCreate: member};
+        case CANCEL_MEMBER_CREATE:
+            return {...state, memberToCreate: null};
     }
 
     return state;

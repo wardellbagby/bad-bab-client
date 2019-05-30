@@ -3,13 +3,18 @@ import {useSelector, useDispatch} from 'react-redux';
 import {selectMember} from "../actions";
 import _ from 'lodash';
 
-export default function MemberSelect({member}) {
-    const selectedMembers = useSelector(state => state.selected.members)
+export default function MemberSelect({member, selected}) {
     const dispatch = useDispatch();
 
-    const handleSelectMember = () => dispatch(selectMember(member));
+    const handleSelectMember = () => {
+        if (!selected) {
+            dispatch(selectMember(member));
+        }
+    };
 
-    const btnStyle = _.has(selectedMembers, member._id) ? "btn-secondary" : "btn-outline-secondary";
+    const btnStyle = (selected || member.isNew) ? "btn-secondary" : "btn-outline-secondary";
+
+    let displayName = member.isNew ? `Create password for: "${member.name}"` : member.name;
 
     return (
         <button
@@ -18,7 +23,7 @@ export default function MemberSelect({member}) {
             onClick={handleSelectMember}
             className={`mr-1 mb-1 btn ${btnStyle}`}
         >
-            {member.name}
+            {displayName}
         </button>
     )
 }

@@ -9,9 +9,9 @@ function App() {
   return (
     <div className="App">
         <SelectedPlayerList />
+        <MemberSelector />
         <PlayerSelector />
         <Courts />
-        <MemberSelector />
     </div>
   );
 }

@@ -21,6 +21,8 @@ export const SELECT_MEMBER = 'SELECT_MEMBER';
 export const FILTER_PLAYER = 'FILTER_PLAYER';
 export const FILTER_MEMBER = 'FILTER_MEMBER';
 
+export const CANCEL_MEMBER_CREATE = 'CANCEL_MEMBER_CREATE';
+
 
 export function requestMembers() {
     // const request = getRequest(MEMBERS);
@@ -88,5 +90,12 @@ export function memberFilterChanged(memberText) {
     return {
         type: FILTER_MEMBER,
         payload: memberText
+    };
+}
+
+
+export function cancelCreatingMember() {
+    return {
+        type: CANCEL_MEMBER_CREATE
     };
 }
