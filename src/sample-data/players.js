@@ -104,6 +104,12 @@ export default {
       "name": "cren"
     },
     {
+      "_id": "5cf08401773f2512101a3acd",
+      "name": "adrian",
+      "password": "snake",
+      "slackId": "<@U7JL1S1S5>"
+    },
+    {
       "_id": "5ce74798860fb6000433b7a4",
       "slackId": "UHT67TYRM",
       "name": "victor"

@@ -1,7 +1,8 @@
 import React from 'react';
 import {selectPassword} from "../actions";
 
-const passwords = [
+// todo make this non exported, remove use in people reducer
+export const passwords = [
     'mouse',
     'ox',
     'tiger',

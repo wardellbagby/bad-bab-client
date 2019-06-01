@@ -1,5 +1,6 @@
-import {FETCH_PLAYERS, FETCH_MEMBERS, FILTER_PLAYER, FILTER_MEMBER, CANCEL_MEMBER_CREATE} from "../actions/index";
+import {CANCEL_MEMBER_CREATE, FETCH_MEMBERS, FETCH_PLAYERS, FILTER_MEMBER, FILTER_PLAYER} from "../actions/index";
 import _ from 'lodash';
+import {passwords} from "../containers/PasswordSelector";
 
 const defaultState = {
     members: [],
@@ -21,6 +22,9 @@ export default function (state = defaultState, action) {
             players = _.sortBy(players, (player) => player.name);
 
             players = _.each(players, (player) => player.name = _.startCase(player.name));
+
+            // todo: remove this logic, make the imported passwords non exported
+            players = _.each(players, (player) => player.password = player.password || _.sample(passwords));
 
             return {...state, players};
 
