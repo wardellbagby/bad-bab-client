@@ -25,7 +25,8 @@ export default function PasswordSelector({selectedMember}) {
                 <button
                     type="button"
                     onClick={selectPassword(selectedMember)}
-                    className={`mr-1 mb-1 btn btn-outline-dark`}
+                    className={`mr-1 mb-1 btn btn-outline-secondary`}
+                    key={password}
                 >
                     {password}
                 </button>

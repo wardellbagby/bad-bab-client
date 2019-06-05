@@ -17,18 +17,17 @@ export default function MemberSelector() {
     const updateFilter = (event) => dispatch(memberFilterChanged(event.target.value));
 
     if (memberToCreate) {
-        return (
-            <Card title="Members">
-                <MemberPasswordForm member={memberToCreate}/>
-            </Card>
-        );
+        return <MemberPasswordForm member={memberToCreate}/>;
     }
+
 
     return (
         <Card title="Members">
-            {members.map(member => (
-                <MemberSelect member={member} key={member._id} highlighted={member.isNew}/>
-            ))}
+            <div className={"flex-wrap d-flex justify-content-between"}>
+                {members.map(member => (
+                    <MemberSelect member={member} key={member._id} highlighted={member.isNew}/>
+                ))}
+            </div>
 
             <input type="text"
                    className="form-control bg-dark text-light mt-2"
