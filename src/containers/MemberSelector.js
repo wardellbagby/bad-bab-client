@@ -22,7 +22,7 @@ export default function MemberSelector() {
 
 
     return (
-        <Card title="Members">
+        <div title="Members">
             <div className={"flex-wrap d-flex justify-content-between"}>
                 {members.map(member => (
                     <MemberSelect member={member} key={member._id} highlighted={member.isNew}/>
@@ -33,6 +33,6 @@ export default function MemberSelector() {
                    className="form-control bg-dark text-light mt-2"
                    onChange={updateFilter}
                    placeholder="Filter or add Member"/>
-        </Card>
+        </div>
     );
 }

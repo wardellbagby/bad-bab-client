@@ -89,3 +89,32 @@ export default {
         }
     ]
 }
+
+export const currentCourts = {
+    "reservations": [
+        {
+            "players": [
+                "eric",
+                "chrih"
+            ],
+            "_id": "5d00663c773f2512101a3b2d",
+            "courtNumber": 23,
+            "startAt": 1560307260570,
+            "randoms": false,
+            "token": "83927fa0-8cbb-11e9-9e61-4948ef2497ff",
+            "endAt": 1560309960570
+        },
+        {
+            "players": [
+                "yiyiz",
+                "gracehuang"
+            ],
+            "_id": "5d006659773f2512101a3b2e",
+            "courtNumber": 26,
+            "startAt": 1560307289973,
+            "randoms": false,
+            "token": "95190a50-8cbb-11e9-9e61-4948ef2497ff",
+            "endAt": 1560309989973
+        }
+    ]
+};

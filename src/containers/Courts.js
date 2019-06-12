@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {requestCourts} from "../actions";
 import '../style/PlayerSelector.css';
 import Court from "../components/Court";
-import Card from "./Card";
 
 export default function Courts() {
     const courts = useSelector(state => state.courts);
@@ -14,10 +13,10 @@ export default function Courts() {
     }, []);
 
     return (
-        <Card title="Courts">
+        <div>
             {courts.map(court => (
                 <Court court={court} key={court.id}/>
             ))}
-        </Card>
+        </div>
     );
 }

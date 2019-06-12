@@ -24,7 +24,7 @@ function App() {
         </ul>
 
         <div className="tab-content">
-            <div className="tab-pane fade show active" id="players" role="tabpanel">
+            <div className="tab-pane fade show active border border-secondary rounded mt-1 mb-1" id="players" role="tabpanel">
                 <SelectedPlayerList/>
                 <PlayerSelector/>
             </div>

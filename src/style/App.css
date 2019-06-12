@@ -39,3 +39,15 @@
 .card-body {
     padding-bottom: 0;
 }
+
+.tab-pane {
+    margin: .25rem;
+}
+
+body {
+    min-height: 100vh;
+}
+
+html {
+    min-height: 100%;
+}

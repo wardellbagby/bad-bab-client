@@ -16,7 +16,7 @@ export default function PlayerSelector() {
     const updateFilter = (event) => dispatch(playerFilterChanged(event.target.value));
 
     return (
-        <Card title="Players">
+        <div className="d-flex flex-wrap align-content-between p-2">
             {players.map(player => (
                 <PlayerSelect player={player} key={player._id}/>
             ))}
@@ -26,6 +26,6 @@ export default function PlayerSelector() {
                    id="playerFilterText"
                    onChange={updateFilter}
                    placeholder="Player filter"/>
-        </Card>
+        </div>
     );
 }
