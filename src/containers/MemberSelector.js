@@ -25,7 +25,7 @@ export default function MemberSelector() {
         <div title="Members">
             <div className={"flex-wrap d-flex justify-content-between"}>
                 {members.map(member => (
-                    <MemberSelect member={member} key={member._id} highlighted={member.isNew}/>
+                    <MemberSelect member={member} key={member._id} isNewMember={member.isNew}/>
                 ))}
             </div>
 
