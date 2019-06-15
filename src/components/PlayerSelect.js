@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {selectPlayer} from "../actions";
 import _ from 'lodash';
+import {IonItem, IonLabel} from '@ionic/react';
 
 export default function PlayerSelect({player}) {
     const selectedPlayers = useSelector(state => state.selected.players)
@@ -9,16 +10,15 @@ export default function PlayerSelect({player}) {
 
     const handleSelectPlayer = () => dispatch(selectPlayer(player));
 
-    const btnStyle = _.has(selectedPlayers, player._id) ? "btn-secondary" : "btn-outline-secondary";
+    const selectedColor = _.has(selectedPlayers, player._id) ? "success" : "dark";
 
     return (
-        <button
-            type="button"
+        <IonItem
             value={player._id}
             onClick={handleSelectPlayer}
-            className={`mr-1 mb-1 btn ${btnStyle}`}
         >
-            {player.name}
-        </button>
+            <IonLabel color={selectedColor}>{player.name}</IonLabel>
+            <span slot="end" className="text-muted">{player.password}</span>
+        </IonItem>
     )
 }

@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {requestCourts} from "../actions";
-import '../style/PlayerSelector.css';
 import Court from "../components/Court";
 
 export default function Courts() {

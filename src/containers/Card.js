@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import '../style/PlayerSelector.css';
 import _ from 'lodash';
 
 export default function Card({title, header, children}) {

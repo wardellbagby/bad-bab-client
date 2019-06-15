@@ -1,42 +1,62 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '../style/App.css';
 import MemberSelector from '../containers/MemberSelector';
-import PlayerSelector from '../containers/PlayerSelector';
-import SelectedPlayerList from '../containers/SelectedPlayerList';
+import PlayerSelector, {PlayerSelectorFooter} from '../containers/PlayerSelector';
 import Courts from "../containers/Courts";
+import {IonApp, IonContent, IonHeader, IonLabel, IonSegment, IonSegmentButton, IonToolbar} from '@ionic/react';
+import '@ionic/core/css/core.css';
+import '@ionic/core/css/ionic.bundle.css';
 
-function App() {
-  return (
-    <div className="App">
-        <ul className="nav nav-pills bg-dark mt-1 justify-content-around" role="tablist">
-            <li className="nav-item">
-                <a className="nav-link active" id="players-pills" data-toggle="pill" href="#players" role="tab"
-                   aria-controls="players" aria-selected="true">Players</a>
-            </li>
-            <li className="nav-item">
-                <a className="nav-link" id="profile-pills" data-toggle="pill" href="#courts" role="tab"
-                   aria-controls="courts" aria-selected="false">Courts</a>
-            </li>
-            <li className="nav-item">
-                <a className="nav-link" id="contact-pills" data-toggle="pill" href="#members" role="tab"
-                   aria-controls="members" aria-selected="false">Members</a>
-            </li>
-        </ul>
+const PLAYER_PANE = "PLAYER_PANE";
+const COURT_PANE = "COURT_PANE";
+const MEMBER_PANE = "MEMBER_PANE";
 
-        <div className="tab-content">
-            <div className="tab-pane fade show active border border-secondary rounded mt-1 mb-1" id="players" role="tabpanel">
-                <SelectedPlayerList/>
-                <PlayerSelector/>
-            </div>
-            <div className="tab-pane fade" id="courts" role="tabpanel">
-                <Courts/>
-            </div>
-            <div className="tab-pane fade" id="members" role="tabpanel">
-                <MemberSelector/>
-            </div>
-        </div>
-    </div>
-  );
+export default function App() {
+    const [selectedPane, setSelectedPane] = useState(PLAYER_PANE);
+
+    let customFooter = null;
+    const body = (() => {
+        switch (selectedPane) {
+            case PLAYER_PANE:
+                customFooter = <PlayerSelectorFooter/>;
+                return <PlayerSelector/>;
+
+            case COURT_PANE:
+                return <Courts/>;
+
+            case MEMBER_PANE:
+                return <MemberSelector/>;
+        }
+    })();
+
+    const header = (
+        <IonHeader>
+            <IonToolbar class="header">
+                <IonSegment onIonChange={(e) => setSelectedPane(e.detail.value)} value={selectedPane}>
+                    <IonSegmentButton value={PLAYER_PANE}>
+                        <IonLabel>Players</IonLabel>
+                    </IonSegmentButton>
+                    <IonSegmentButton value={COURT_PANE}>
+                        <IonLabel>Courts</IonLabel>
+                    </IonSegmentButton>
+                    <IonSegmentButton value={MEMBER_PANE}>
+                        <IonLabel>Members</IonLabel>
+                    </IonSegmentButton>
+                </IonSegment>
+            </IonToolbar>
+        </IonHeader>
+    );
+
+
+    return (
+        <IonApp>
+            {header}
+
+            <IonContent fullScreen>
+                {body}
+            </IonContent>
+
+            {customFooter}
+        </IonApp>
+    );
 }
-
-export default App;

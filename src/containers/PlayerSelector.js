@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {requestPlayers, playerFilterChanged} from "../actions";
+import {useDispatch, useSelector} from 'react-redux';
+import {playerFilterChanged, requestPlayers} from "../actions";
 import PlayerSelect from "../components/PlayerSelect";
-import '../style/PlayerSelector.css';
-import Card from "./Card";
+
+import {IonFooter, IonList, IonSearchbar, IonToolbar} from '@ionic/react';
 
 export default function PlayerSelector() {
     const players = useSelector(state => state.people.filteredPlayers || state.people.players);
@@ -13,19 +13,27 @@ export default function PlayerSelector() {
         dispatch(requestPlayers());
     }, []);
 
-    const updateFilter = (event) => dispatch(playerFilterChanged(event.target.value));
-
     return (
-        <div className="d-flex flex-wrap align-content-between p-2">
+        <IonList>
             {players.map(player => (
                 <PlayerSelect player={player} key={player._id}/>
             ))}
+        </IonList>
+    );
+}
 
-            <input type="text"
-                   className="form-control bg-dark text-light mt-2"
-                   id="playerFilterText"
-                   onChange={updateFilter}
-                   placeholder="Player filter"/>
-        </div>
+export function PlayerSelectorFooter() {
+    const dispatch = useDispatch();
+
+    const updateFilter = (event) => dispatch(playerFilterChanged(event.target.value));
+
+    return (
+        <IonFooter>
+            <IonToolbar>
+                <IonSearchbar style={{'--placeholder-color': 'red'}}
+                              placeholder="Player filter"
+                              onIonInput={updateFilter}/>
+            </IonToolbar>
+        </IonFooter>
     );
 }
