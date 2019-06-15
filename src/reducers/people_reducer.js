@@ -36,6 +36,8 @@ export default function (state = defaultState, action) {
 
             members = _.each(members, (member) => member.name = _.startCase(member.playerName));
 
+            members = _.chunk(members, 3);
+
             return {...state, members};
 
         case FILTER_PLAYER:
@@ -45,7 +47,7 @@ export default function (state = defaultState, action) {
             if (_.isEmpty(playerNameFilter)) {
                 filteredPlayers = null;
             } else {
-                filteredPlayers = _.filter(state.players, nameContainsFilter(_.toLower(playerNameFilter)));
+                filteredPlayers = _.filter(state.players, nameContainsFilter(playerNameFilter));
             }
 
             return {...state, filteredPlayers};
@@ -55,9 +57,11 @@ export default function (state = defaultState, action) {
             let filteredMembers = null;
 
             if (!_.isEmpty(memberNameFilter)) {
-                filteredMembers = _.filter(state.members, nameContainsFilter(_.toLower(memberNameFilter)));
+                filteredMembers = _.filter(_.flatten(state.members), nameContainsFilter(memberNameFilter));
 
                 filteredMembers.push({name: memberNameFilter, _id: "searchedMember", isNew: true});
+
+                filteredMembers = _.chunk(filteredMembers, 3);
             }
 
 
@@ -71,4 +75,4 @@ export default function (state = defaultState, action) {
 }
 
 // currying probably is not the best in production code but it is just so beautiful
-const nameContainsFilter = (nameFilter) => ({name}) => _.toLower(name).includes(nameFilter);
+const nameContainsFilter = (nameFilter) => ({name}) => _.toLower(name).includes(_.toLower(nameFilter));

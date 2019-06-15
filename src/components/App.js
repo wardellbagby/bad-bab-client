@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import '../style/App.css';
-import MemberSelector from '../containers/MemberSelector';
+import MemberSelector, {MemberSelectorFooter} from '../containers/MemberSelector';
 import PlayerSelector, {PlayerSelectorFooter} from '../containers/PlayerSelector';
 import Courts from "../containers/Courts";
 import {IonApp, IonContent, IonHeader, IonLabel, IonSegment, IonSegmentButton, IonToolbar} from '@ionic/react';
@@ -25,6 +25,7 @@ export default function App() {
                 return <Courts/>;
 
             case MEMBER_PANE:
+                customFooter = <MemberSelectorFooter/>;
                 return <MemberSelector/>;
         }
     })();

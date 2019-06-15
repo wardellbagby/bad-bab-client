@@ -2,11 +2,11 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {memberFilterChanged, requestMembers} from "../actions";
 import MemberSelect from "../components/MemberSelect";
-import Card from "./Card";
 import MemberPasswordForm from "../components/MemberPasswordForm";
+import {IonCol, IonFooter, IonGrid, IonRow, IonSearchbar, IonToolbar} from "@ionic/react";
 
 export default function MemberSelector() {
-    const members = useSelector(state => state.people.filteredMembers || state.people.members);
+    const memberChunks = useSelector(state => state.people.filteredMembers || state.people.members);
     const memberToCreate = useSelector(state => state.selected.memberToCreate);
     const dispatch = useDispatch();
 
@@ -14,25 +14,44 @@ export default function MemberSelector() {
         dispatch(requestMembers());
     }, []);
 
-    const updateFilter = (event) => dispatch(memberFilterChanged(event.target.value));
-
     if (memberToCreate) {
         return <MemberPasswordForm member={memberToCreate}/>;
     }
 
+    //TODO: if there are only two people in a chunk, align them so they fit.
+    // I am guessing you just need a blank span to fill space
+    const createRow = (memberChunk) => (
+        <IonRow>
+            {memberChunk.map(member => (
+                <IonCol>
+                    <MemberSelect member={member} key={member._id} isNewMember={member.isNew}/>
+                </IonCol>
+            ))}
+        </IonRow>
+    );
+
+
+    //TODO: add a final row for "create new member" button. this will make a cleaner interface
+    return (
+        <IonGrid title="Members">
+            {memberChunks.map(createRow)}
+        </IonGrid>
+    );
+}
+
+
+export function MemberSelectorFooter() {
+    const dispatch = useDispatch();
+
+    const updateFilter = (event) => dispatch(memberFilterChanged(event.target.value));
 
     return (
-        <div title="Members">
-            <div className={"flex-wrap d-flex justify-content-between"}>
-                {members.map(member => (
-                    <MemberSelect member={member} key={member._id} isNewMember={member.isNew}/>
-                ))}
-            </div>
-
-            <input type="text"
-                   className="form-control bg-dark text-light mt-2"
-                   onChange={updateFilter}
-                   placeholder="Filter or add Member"/>
-        </div>
+        <IonFooter>
+            <IonToolbar>
+                <IonSearchbar style={{'--placeholder-color': 'blue'}}
+                              placeholder="Filter or add Member"
+                              onIonInput={updateFilter}/>
+            </IonToolbar>
+        </IonFooter>
     );
 }
