@@ -5,9 +5,12 @@ import {passwords} from "../containers/PasswordSelector";
 const defaultState = {
     members: [],
     players: [],
+    chunkedMembers: [],
     filteredPlayers: null,
     filteredMembers: null
 };
+
+const CHUNK_SIZE = 3;
 
 export default function (state = defaultState, action) {
     let payload;
@@ -36,9 +39,9 @@ export default function (state = defaultState, action) {
 
             members = _.each(members, (member) => member.name = _.startCase(member.playerName));
 
-            members = _.chunk(members, 3);
+            const chunkedMembers = chunkify(members);
 
-            return {...state, members};
+            return {...state, members, chunkedMembers};
 
         case FILTER_PLAYER:
             const playerNameFilter = action.payload;
@@ -57,11 +60,11 @@ export default function (state = defaultState, action) {
             let filteredMembers = null;
 
             if (!_.isEmpty(memberNameFilter)) {
-                filteredMembers = _.filter(_.flatten(state.members), nameContainsFilter(memberNameFilter));
+                filteredMembers = _.filter(state.members, nameContainsFilter(memberNameFilter));
 
-                filteredMembers.push({name: memberNameFilter, _id: "searchedMember", isNew: true});
+                filteredMembers = chunkify(filteredMembers);
 
-                filteredMembers = _.chunk(filteredMembers, 3);
+                filteredMembers.push([{name: memberNameFilter, _id: "searchedMember", isNew: true}]);
             }
 
 
@@ -76,3 +79,17 @@ export default function (state = defaultState, action) {
 
 // currying probably is not the best in production code but it is just so beautiful
 const nameContainsFilter = (nameFilter) => ({name}) => _.toLower(name).includes(_.toLower(nameFilter));
+
+function chunkify(list) {
+    if (list.length === 0) {
+        return [];
+    }
+
+    list = _.chunk(list, CHUNK_SIZE);
+
+    if (_.last(list).length !== CHUNK_SIZE) {
+        _.last(list)[CHUNK_SIZE - 1] = undefined;
+    }
+
+    return list;
+}

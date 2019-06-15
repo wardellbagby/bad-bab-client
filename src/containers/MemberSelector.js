@@ -6,7 +6,7 @@ import MemberPasswordForm from "../components/MemberPasswordForm";
 import {IonCol, IonFooter, IonGrid, IonRow, IonSearchbar, IonToolbar} from "@ionic/react";
 
 export default function MemberSelector() {
-    const memberChunks = useSelector(state => state.people.filteredMembers || state.people.members);
+    const memberChunks = useSelector(state => state.people.filteredMembers || state.people.chunkedMembers);
     const memberToCreate = useSelector(state => state.selected.memberToCreate);
     const dispatch = useDispatch();
 
@@ -18,20 +18,24 @@ export default function MemberSelector() {
         return <MemberPasswordForm member={memberToCreate}/>;
     }
 
-    //TODO: if there are only two people in a chunk, align them so they fit.
-    // I am guessing you just need a blank span to fill space
     const createRow = (memberChunk) => (
         <IonRow>
             {memberChunk.map(member => (
                 <IonCol>
-                    <MemberSelect member={member} key={member._id} isNewMember={member.isNew}/>
+                    {createColElement(member)}
                 </IonCol>
             ))}
         </IonRow>
     );
 
+    function createColElement(member) {
+        if (member) {
+            return <MemberSelect member={member} key={member._id} isNewMember={member.isNew}/>
+        }
 
-    //TODO: add a final row for "create new member" button. this will make a cleaner interface
+        return <span/>
+    }
+
     return (
         <IonGrid title="Members">
             {memberChunks.map(createRow)}
