@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import _ from 'lodash';
+import {IonCard, IonCardSubtitle, IonItem} from "@ionic/react";
 
 export default function Court({court}) {
     const [paneIsVisible, setPaneVisibility] = useState(true);
@@ -11,14 +12,11 @@ export default function Court({court}) {
     const collapseClass = paneIsVisible ? "collapse show" : "collapse";
 
     return (
-        <div className="form-row card bg-secondary">
-            <a className="card-header" onClick={updatePaneVisibility}>
-                <h5 className="mb-0 d-flex">
-                    <span class="flex-grow-1">Court {court.id}</span>
-
-                    <i className={`fas fa-caret-${caretDirection}`}/>
-                </h5>
-            </a>
+        <IonCard>
+            <IonItem onClick={updatePaneVisibility}>
+                <IonCardSubtitle>Court {court.id}</IonCardSubtitle>
+                <i className={`fas fa-caret-${caretDirection}`} slot="end"/>
+            </IonItem>
 
             <div className={collapseClass}>
                 <div className="card-body py-3">
@@ -29,7 +27,7 @@ export default function Court({court}) {
                     ))}
                 </div>
             </div>
-        </div>
+        </IonCard>
     )
 }
 
