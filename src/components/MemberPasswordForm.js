@@ -2,7 +2,7 @@ import React from 'react';
 import {useDispatch} from 'react-redux';
 import {cancelCreatingMember} from "../actions";
 import PasswordSelector from "../containers/PasswordSelector";
-import Card from "../containers/Card";
+import {IonButton, IonCardHeader, IonCardTitle} from "@ionic/react";
 
 export default function MemberPasswordForm({member}) {
     const dispatch = useDispatch();
@@ -10,15 +10,21 @@ export default function MemberPasswordForm({member}) {
     const handleCancel = () => dispatch(cancelCreatingMember());
 
     return (
-        <Card title="Members" header={`Members > ${member.name}`}>
+        <>
+            <IonCardHeader>
+                <IonCardTitle>{member.name}</IonCardTitle>
+            </IonCardHeader>
+
             <PasswordSelector/>
+
             <div className="d-flex flex-row-reverse">
-                <button type="button" className="btn btn-danger mt-1"
-                        onClick={handleCancel}
+                <IonButton color="danger"
+                           className="mt-1 mr-2"
+                           onClick={handleCancel}
                 >
                     Cancel
-                </button>
+                </IonButton>
             </div>
-        </Card>
+        </>
     )
 }

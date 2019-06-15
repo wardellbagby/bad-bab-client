@@ -1,5 +1,6 @@
 import React from 'react';
 import {selectPassword} from "../actions";
+import {IonButton} from "@ionic/react";
 
 // todo make this non exported, remove use in people reducer
 export const passwords = [
@@ -22,14 +23,12 @@ export default function PasswordSelector({selectedMember}) {
     return (
         <div className="d-inline-flex flex-wrap justify-content-center">
             {passwords.map(password => (
-                <button
-                    type="button"
+                <IonButton color="light"
                     onClick={selectPassword(selectedMember)}
-                    className={`mr-1 mb-1 btn btn-outline-secondary`}
                     key={password}
                 >
                     {password}
-                </button>
+                </IonButton>
             ))}
         </div>
     );
