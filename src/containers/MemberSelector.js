@@ -46,6 +46,11 @@ export default function MemberSelector() {
 
 export function MemberSelectorFooter() {
     const dispatch = useDispatch();
+    const memberToCreate = useSelector(state => state.selected.memberToCreate);
+
+    if (memberToCreate) {
+        return <span/>;
+    }
 
     const updateFilter = (event) => dispatch(memberFilterChanged(event.target.value));
 
