@@ -1,15 +1,41 @@
-import {SELECT_PLAYER, SELECT_MEMBER, CANCEL_MEMBER_CREATE, SELECT_PASSWORD} from "../actions/index";
+import {
+    CANCEL_MEMBER_CREATE,
+    UPDATE_PLAYER,
+    SELECT_MEMBER,
+    SELECT_PASSWORD,
+    SELECT_PLAYER,
+    CANCEL_PLAYER_UPDATE, START_UPDATING_PLAYER
+} from "../actions/index";
 import _ from 'lodash';
 
-export default function (state = {players: {}, memberToCreate: null, password: null}, action) {
+const defaultState = {
+    players: {},
+    memberToCreate: null,
+    password: null,
+    playerToUpdate: null
+};
 
+export default function (state = defaultState, action) {
+
+    let player;
 
     switch (action.type) {
         case SELECT_PLAYER:
-            const player = action.payload;
-            const players = updatePlayerId({...state.players}, player);
+            player = action.payload;
+            const players = updatePlayerSelections({...state.players}, player);
 
             return {...state, players};
+
+        case START_UPDATING_PLAYER:
+            player = action.payload;
+            return {...state, playerToUpdate: player};
+
+        case UPDATE_PLAYER:
+            return {...state, playerToUpdate: null};
+
+        case CANCEL_PLAYER_UPDATE:
+            return {...state, playerToUpdate: null};
+
         case SELECT_MEMBER:
             const member = action.payload;
 
@@ -27,7 +53,7 @@ export default function (state = {players: {}, memberToCreate: null, password: n
     return state;
 }
 
-function updatePlayerId(players, player) {
+function updatePlayerSelections(players, player) {
     if (_.has(players, player._id)) {
         _.unset(players, player._id);
     } else if (_.values(players).length < 2) {

@@ -16,6 +16,10 @@ export const FETCH_COURTS = 'FETCH_COURTS';
 export const FETCH_SESSIONS = 'FETCH_SESSIONS';
 
 export const SELECT_PLAYER = 'SELECT_PLAYER';
+export const UPDATE_PLAYER = 'UPDATE_PLAYER';
+export const START_UPDATING_PLAYER = 'START_UPDATING_PLAYER';
+export const CANCEL_PLAYER_UPDATE = 'CANCEL_PLAYER_UPDATE';
+export const REMOVE_PLAYER = 'REMOVE_PLAYER';
 export const SELECT_MEMBER = 'SELECT_MEMBER';
 export const SELECT_PASSWORD = 'SELECT_PASSWORD';
 
@@ -79,7 +83,7 @@ export function selectMember(member) {
     };
 }
 
-export const selectPassword = (chosenMember) => (password) => {
+export function selectPassword(chosenMember, password) {
     // todo: run call to create a player here, maybe change function name
     return {
         type: SELECT_PASSWORD,
@@ -106,5 +110,34 @@ export function memberFilterChanged(memberText) {
 export function cancelCreatingMember() {
     return {
         type: CANCEL_MEMBER_CREATE
+    };
+}
+
+export function startUpdatingPlayer(player) {
+    return {
+        type: START_UPDATING_PLAYER,
+        payload: player
+    };
+}
+
+export function updatePlayer(player, name, password) {
+    //TODO : send action to server to update player information
+    return {
+        type: UPDATE_PLAYER,
+        payload: {player, name, password}
+    };
+}
+
+export function cancelPlayerUpdate() {
+    return {
+        type: CANCEL_PLAYER_UPDATE
+    };
+}
+
+export function removePlayer(player) {
+    //TODO : send action to the server
+    return {
+        type: REMOVE_PLAYER,
+        payload: player
     };
 }

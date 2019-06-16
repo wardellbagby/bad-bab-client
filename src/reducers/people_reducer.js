@@ -1,4 +1,12 @@
-import {CANCEL_MEMBER_CREATE, FETCH_MEMBERS, FETCH_PLAYERS, FILTER_MEMBER, FILTER_PLAYER} from "../actions/index";
+import {
+    CANCEL_MEMBER_CREATE,
+    FETCH_MEMBERS,
+    FETCH_PLAYERS,
+    FILTER_MEMBER,
+    FILTER_PLAYER,
+    REMOVE_PLAYER,
+    UPDATE_PLAYER
+} from "../actions/index";
 import _ from 'lodash';
 import {passwords} from "../containers/PasswordSelector";
 
@@ -17,7 +25,6 @@ export default function (state = defaultState, action) {
 
     switch (action.type) {
         case FETCH_PLAYERS:
-            // do player stuff here
             payload = action.payload;
 
             let players = payload && payload.data && payload.data.players ? payload.data.players : [];
@@ -72,6 +79,14 @@ export default function (state = defaultState, action) {
 
         case CANCEL_MEMBER_CREATE:
             return {...state, filteredMembers: null};
+
+        case REMOVE_PLAYER:
+            const playerToRemove = action.payload;
+            return {...state, players: _.reject(state.players, playerToRemove)};
+
+        case UPDATE_PLAYER:
+            updatePlayerInformation(action.payload);
+            return {...state, players: [...state.players]}
     }
 
     return state;
@@ -92,4 +107,10 @@ function chunkify(list) {
     }
 
     return list;
+}
+
+function updatePlayerInformation({player, name, password}) {
+    player.name = name;
+    player.password = password;
+
 }
