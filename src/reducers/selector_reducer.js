@@ -1,6 +1,6 @@
 import {
     CANCEL_MEMBER_CREATE,
-    CANCEL_PLAYER_UPDATE,
+    CANCEL_PLAYER_UPDATE, FILTER_MEMBER,
     FILTER_PLAYER,
     REMOVE_PLAYER,
     SELECT_MEMBER,
@@ -16,7 +16,8 @@ const defaultState = {
     memberToCreate: null,
     password: null,
     playerToUpdate: null,
-    playerNameFilter: null
+    playerNameFilter: null,
+    memberNameFilter: null
 };
 
 export default function (state = defaultState, action) {
@@ -60,6 +61,11 @@ export default function (state = defaultState, action) {
             const playerNameFilter = action.payload;
 
             return {...state, playerNameFilter};
+
+        case FILTER_MEMBER:
+            const memberNameFilter = action.payload;
+
+            return {...state, memberNameFilter};
     }
 
     return state;

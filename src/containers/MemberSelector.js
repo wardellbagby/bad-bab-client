@@ -47,6 +47,7 @@ export default function MemberSelector() {
 export function MemberSelectorFooter() {
     const dispatch = useDispatch();
     const memberToCreate = useSelector(state => state.selected.memberToCreate);
+    const memberNameFilter = useSelector(state => state.selected.memberNameFilter);
 
     if (memberToCreate) {
         return <span/>;
@@ -59,6 +60,7 @@ export function MemberSelectorFooter() {
             <IonToolbar>
                 <IonSearchbar style={{'--placeholder-color': 'blue'}}
                               placeholder="Filter or add Member"
+                              value={memberNameFilter}
                               onIonInput={updateFilter}/>
             </IonToolbar>
         </IonFooter>
