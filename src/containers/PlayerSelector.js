@@ -31,6 +31,7 @@ export default function PlayerSelector() {
 export function PlayerSelectorFooter() {
     const dispatch = useDispatch();
     const playerToUpdate = useSelector(state => state.selected.playerToUpdate);
+    const playerNameFilter = useSelector(state => state.selected.playerNameFilter);
 
     if (playerToUpdate) {
         return <span/>;
@@ -43,6 +44,7 @@ export function PlayerSelectorFooter() {
             <IonToolbar>
                 <IonSearchbar style={{'--placeholder-color': 'red'}}
                               placeholder="Filter or add Player"
+                              value={playerNameFilter}
                               onIonInput={updateFilter}/>
             </IonToolbar>
         </IonFooter>

@@ -1,10 +1,13 @@
 import {
     CANCEL_MEMBER_CREATE,
-    UPDATE_PLAYER,
+    CANCEL_PLAYER_UPDATE,
+    FILTER_PLAYER,
+    REMOVE_PLAYER,
     SELECT_MEMBER,
     SELECT_PASSWORD,
     SELECT_PLAYER,
-    CANCEL_PLAYER_UPDATE, START_UPDATING_PLAYER
+    START_UPDATING_PLAYER,
+    UPDATE_PLAYER
 } from "../actions/index";
 import _ from 'lodash';
 
@@ -12,7 +15,8 @@ const defaultState = {
     players: {},
     memberToCreate: null,
     password: null,
-    playerToUpdate: null
+    playerToUpdate: null,
+    playerNameFilter: null
 };
 
 export default function (state = defaultState, action) {
@@ -48,6 +52,14 @@ export default function (state = defaultState, action) {
 
         case CANCEL_MEMBER_CREATE:
             return {...state, memberToCreate: null};
+
+        case REMOVE_PLAYER:
+            return {...state, playerNameFilter: null};
+
+        case FILTER_PLAYER:
+            const playerNameFilter = action.payload;
+
+            return {...state, playerNameFilter};
     }
 
     return state;
