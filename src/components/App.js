@@ -15,20 +15,22 @@ export default function App() {
     const [selectedPane, setSelectedPane] = useState(PLAYER_PANE);
 
     let customFooter = null;
-    const body = (() => {
-        switch (selectedPane) {
-            case PLAYER_PANE:
-                customFooter = <PlayerSelectorFooter/>;
-                return <PlayerSelector/>;
+    let body = null;
 
-            case COURT_PANE:
-                return <Courts/>;
+    switch (selectedPane) {
+        case PLAYER_PANE:
+            customFooter = <PlayerSelectorFooter/>;
+            body = <PlayerSelector/>;
+            break;
 
-            case MEMBER_PANE:
-                customFooter = <MemberSelectorFooter/>;
-                return <MemberSelector/>;
-        }
-    })();
+        case COURT_PANE:
+            body = <Courts/>;
+            break;
+
+        case MEMBER_PANE:
+            customFooter = <MemberSelectorFooter/>;
+            body = <MemberSelector/>;
+    }
 
     const header = (
         <IonHeader>
