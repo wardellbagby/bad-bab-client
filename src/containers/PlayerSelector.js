@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {playerFilterChanged, requestPlayers} from "../actions";
 import PlayerSelect from "../components/PlayerSelect";
 
-import {IonFooter, IonList, IonSearchbar, IonToolbar, IonListHeader, IonLabel} from '@ionic/react';
+import {IonFooter, IonList, IonSearchbar, IonToolbar} from '@ionic/react';
 import PlayerPasswordForm from "../components/PlayerPasswordForm";
 
 export default function PlayerSelector() {
@@ -20,19 +20,11 @@ export default function PlayerSelector() {
     }
 
     return (
-        <>
-            <IonListHeader>
-                <IonLabel>Current Courts</IonLabel>
-            </IonListHeader>
-            <IonList>
-                {players.map(player => (
-                    <PlayerSelect player={player} key={player._id}/>
-                ))}
-            </IonList>
-            <IonListHeader>
-                <IonLabel>Upcoming Courts</IonLabel>
-            </IonListHeader>
-        </>
+        <IonList>
+            {players.map(player => (
+                <PlayerSelect player={player} key={player._id}/>
+            ))}
+        </IonList>
     );
 }
 
