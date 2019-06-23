@@ -1,7 +1,7 @@
 import React from 'react';
 import {IonCard, IonCardSubtitle, IonItem} from "@ionic/react";
 
-export default function Court({court, isCurrentCourt}) {
+export default function Court({court}) {
     return (
         <IonCard>
             <IonItem>
