@@ -1,23 +1,18 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {playerFilterChanged, requestPlayers} from "../actions";
+import {cancelPlayerUpdate, playerFilterChanged, requestPlayers} from "../actions";
 import PlayerSelect from "../components/PlayerSelect";
 
-import {IonFooter, IonLabel, IonList, IonListHeader, IonSearchbar, IonToolbar} from '@ionic/react';
+import {IonFooter, IonLabel, IonList, IonListHeader, IonPopover, IonSearchbar, IonToolbar} from '@ionic/react';
 import PlayerPasswordForm from "../components/PlayerPasswordForm";
 
 export default function PlayerSelector() {
     const [reservedPlayers, availablePlayers] = useSelector(state => state.people.filteredPlayers || state.people.partitionedPlayers);
-    const playerToUpdate = useSelector(state => state.selected.playerToUpdate);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(requestPlayers());
     }, []);
-
-    if (playerToUpdate) {
-        return <PlayerPasswordForm player={playerToUpdate}/>;
-    }
 
     return (
         <IonList>
@@ -39,12 +34,7 @@ export default function PlayerSelector() {
 
 export function PlayerSelectorFooter() {
     const dispatch = useDispatch();
-    const playerToUpdate = useSelector(state => state.selected.playerToUpdate);
     const playerNameFilter = useSelector(state => state.selected.playerNameFilter);
-
-    if (playerToUpdate) {
-        return <span/>;
-    }
 
     const updateFilter = (event) => dispatch(playerFilterChanged(event.target.value));
 
@@ -57,5 +47,28 @@ export function PlayerSelectorFooter() {
                               onIonInput={updateFilter}/>
             </IonToolbar>
         </IonFooter>
+    );
+}
+
+export function PlayerAddModal() {
+    const dispatch = useDispatch();
+
+    const handleCancel = () => dispatch(cancelPlayerUpdate());
+    const playerToUpdate = useSelector(state => state.selected.playerToUpdate);
+    let passwordForm = null;
+
+    if (playerToUpdate) {
+        passwordForm = (
+            <PlayerPasswordForm player={playerToUpdate}/>
+        );
+    }
+
+    return (
+        <IonPopover
+            isOpen={!!playerToUpdate}
+            onDidDismiss={() => handleCancel()}
+        >
+            {passwordForm}
+        </IonPopover>
     );
 }

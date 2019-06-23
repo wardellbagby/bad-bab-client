@@ -1,22 +1,17 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {memberFilterChanged, requestMembers} from "../actions";
+import {cancelCreatingMember, memberFilterChanged, requestMembers} from "../actions";
 import MemberSelect from "../components/MemberSelect";
 import MemberPasswordForm from "../components/MemberPasswordForm";
-import {IonCol, IonFooter, IonGrid, IonRow, IonSearchbar, IonToolbar} from "@ionic/react";
+import {IonCol, IonFooter, IonGrid, IonPopover, IonRow, IonSearchbar, IonToolbar} from "@ionic/react";
 
 export default function MemberSelector() {
     const memberChunks = useSelector(state => state.people.filteredMembers || state.people.chunkedMembers);
-    const memberToCreate = useSelector(state => state.selected.memberToCreate);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(requestMembers());
     }, []);
-
-    if (memberToCreate) {
-        return <MemberPasswordForm member={memberToCreate}/>;
-    }
 
     const createRow = (memberChunk) => (
         <IonRow>
@@ -46,12 +41,7 @@ export default function MemberSelector() {
 
 export function MemberSelectorFooter() {
     const dispatch = useDispatch();
-    const memberToCreate = useSelector(state => state.selected.memberToCreate);
     const memberNameFilter = useSelector(state => state.selected.memberNameFilter);
-
-    if (memberToCreate) {
-        return <span/>;
-    }
 
     const updateFilter = (event) => dispatch(memberFilterChanged(event.target.value));
 
@@ -64,5 +54,28 @@ export function MemberSelectorFooter() {
                               onIonInput={updateFilter}/>
             </IonToolbar>
         </IonFooter>
+    );
+}
+
+export function MemberAddModal() {
+    const dispatch = useDispatch();
+
+    const handleCancel = () => dispatch(cancelCreatingMember());
+    const memberToCreate = useSelector(state => state.selected.memberToCreate);
+    let passwordForm = null;
+
+    if (memberToCreate) {
+        passwordForm = (
+            <MemberPasswordForm member={memberToCreate}/>
+        );
+    }
+
+    return (
+        <IonPopover
+            isOpen={!!memberToCreate}
+            onDidDismiss={() => handleCancel()}
+        >
+            {passwordForm}
+        </IonPopover>
     );
 }

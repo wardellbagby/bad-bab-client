@@ -1,9 +1,20 @@
 import React, {useState} from 'react';
 import '../style/App.css';
-import MemberSelector, {MemberSelectorFooter} from '../containers/MemberSelector';
-import PlayerSelector, {PlayerSelectorFooter} from '../containers/PlayerSelector';
+import MemberSelector, {MemberSelectorFooter, MemberAddModal} from '../containers/MemberSelector';
+import PlayerSelector, {PlayerSelectorFooter, PlayerAddModal} from '../containers/PlayerSelector';
 import Courts from "../containers/Courts";
-import {IonApp, IonContent, IonHeader, IonLabel, IonSegment, IonSegmentButton, IonToolbar} from '@ionic/react';
+import {
+    IonApp,
+    IonContent,
+    IonFab,
+    IonFabButton,
+    IonHeader,
+    IonIcon,
+    IonLabel,
+    IonSegment,
+    IonSegmentButton,
+    IonToolbar
+} from '@ionic/react';
 import '@ionic/core/css/core.css';
 import '@ionic/core/css/ionic.bundle.css';
 
@@ -13,23 +24,27 @@ const MEMBER_PANE = "MEMBER_PANE";
 
 export default function App() {
     const [selectedPane, setSelectedPane] = useState(PLAYER_PANE);
+    const [showModal, setShowModal] = useState(false);
 
     let customFooter = null;
-    let body = null;
+    let pane = null;
+    let modal = null;
 
     switch (selectedPane) {
         case PLAYER_PANE:
             customFooter = <PlayerSelectorFooter/>;
-            body = <PlayerSelector/>;
+            pane = <PlayerSelector/>;
+            modal = <PlayerAddModal showModal={showModal} setShowModal={setShowModal}/>;
             break;
 
         case COURT_PANE:
-            body = <Courts/>;
+            pane = <Courts/>;
             break;
 
         case MEMBER_PANE:
             customFooter = <MemberSelectorFooter/>;
-            body = <MemberSelector/>;
+            pane = <MemberSelector/>;
+            modal = <MemberAddModal showModal={showModal} setShowModal={setShowModal}/>;
     }
 
     const header = (
@@ -50,14 +65,25 @@ export default function App() {
         </IonHeader>
     );
 
+    const body = (
+        <IonContent fullScreen>
+            {pane}
+
+            <IonFab vertical="bottom" horizontal="end" slot="fixed">
+                <IonFabButton onClick={() => setShowModal(true)}>
+                    <IonIcon name="add"/>
+                </IonFabButton>
+            </IonFab>
+
+            {modal}
+        </IonContent>
+    );
 
     return (
         <IonApp>
             {header}
 
-            <IonContent fullScreen>
-                {body}
-            </IonContent>
+            {body}
 
             {customFooter}
         </IonApp>
