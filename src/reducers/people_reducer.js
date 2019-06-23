@@ -1,5 +1,6 @@
 import {
     CANCEL_MEMBER_CREATE,
+    FETCH_COURTS,
     FETCH_MEMBERS,
     FETCH_PLAYERS,
     FILTER_MEMBER,
@@ -13,9 +14,12 @@ import {passwords} from "../containers/PasswordSelector";
 const defaultState = {
     members: [],
     players: [],
+    partitionedPlayers: [[], []],
     chunkedMembers: [],
     filteredPlayers: null,
-    filteredMembers: null
+    filteredMembers: null,
+    reservedPlayerNames: [],
+    playerNameFilter: null
 };
 
 const CHUNK_SIZE = 3;
@@ -36,7 +40,7 @@ export default function (state = defaultState, action) {
             // todo: remove this logic, make the imported passwords non exported
             players = _.each(players, (player) => player.password = player.password || _.sample(passwords));
 
-            return {...state, players};
+            return {...state, players, partitionedPlayers: partitionedPlayerList(players, state.reservedPlayerNames)};
 
         case FETCH_MEMBERS:
             payload = action.payload;
@@ -51,16 +55,13 @@ export default function (state = defaultState, action) {
             return {...state, members, chunkedMembers};
 
         case FILTER_PLAYER:
-            const playerNameFilter = action.payload;
-            let filteredPlayers;
+            let playerNameFilter = action.payload;
 
-            if (_.isEmpty(playerNameFilter)) {
-                filteredPlayers = null;
-            } else {
-                filteredPlayers = _.filter(state.players, nameContainsFilter(playerNameFilter));
-            }
-
-            return {...state, filteredPlayers};
+            return {
+                ...state,
+                playerNameFilter,
+                filteredPlayers: filteredPlayerList(state.players, state.reservedPlayerNames, playerNameFilter)
+            };
 
         case FILTER_MEMBER:
             const memberNameFilter = action.payload;
@@ -87,6 +88,17 @@ export default function (state = defaultState, action) {
         case UPDATE_PLAYER:
             updatePlayerInformation(action.payload);
             return {...state, players: [...state.players]}
+
+        case FETCH_COURTS:
+            let reservedPlayerNames = _.flatten(_.map(action.payload.data.reservations, 'players'));
+            reservedPlayerNames = _.map(reservedPlayerNames, _.startCase);
+
+            return {
+                ...state,
+                reservedPlayerNames,
+                partitionedPlayers: partitionedPlayerList(state.players, reservedPlayerNames),
+                filteredPlayers: filteredPlayerList(state.players, state.reservedPlayerNames, state.playerNameFilter)
+            };
     }
 
     return state;
@@ -112,5 +124,21 @@ function chunkify(list) {
 function updatePlayerInformation({player, name, password}) {
     player.name = name;
     player.password = password;
+}
 
+function partitionedPlayerList(players, reservedPlayerNames) {
+    return _.partition(players, (player) => _.includes(reservedPlayerNames, player.name));
+}
+
+function filteredPlayerList(players, reservedPlayerNames, playerNameFilter) {
+    let filteredPlayers;
+
+    if (_.isEmpty(playerNameFilter)) {
+        filteredPlayers = null;
+    } else {
+        filteredPlayers = _.filter(players, nameContainsFilter(playerNameFilter));
+        filteredPlayers = partitionedPlayerList(filteredPlayers, reservedPlayerNames)
+    }
+
+    return filteredPlayers;
 }

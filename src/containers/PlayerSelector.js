@@ -3,11 +3,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {playerFilterChanged, requestPlayers} from "../actions";
 import PlayerSelect from "../components/PlayerSelect";
 
-import {IonFooter, IonList, IonSearchbar, IonToolbar} from '@ionic/react';
+import {IonFooter, IonLabel, IonList, IonListHeader, IonSearchbar, IonToolbar} from '@ionic/react';
 import PlayerPasswordForm from "../components/PlayerPasswordForm";
 
 export default function PlayerSelector() {
-    const players = useSelector(state => state.people.filteredPlayers || state.people.players);
+    const [reservedPlayers, availablePlayers] = useSelector(state => state.people.filteredPlayers || state.people.partitionedPlayers);
     const playerToUpdate = useSelector(state => state.selected.playerToUpdate);
     const dispatch = useDispatch();
 
@@ -21,7 +21,16 @@ export default function PlayerSelector() {
 
     return (
         <IonList>
-            {players.map(player => (
+            <IonListHeader>
+                <IonLabel>Available players</IonLabel>
+            </IonListHeader>
+            {availablePlayers.map(player => (
+                <PlayerSelect player={player} key={player._id}/>
+            ))}
+            <IonListHeader>
+                <IonLabel>Players in use</IonLabel>
+            </IonListHeader>
+            {reservedPlayers.map(player => (
                 <PlayerSelect player={player} key={player._id}/>
             ))}
         </IonList>
