@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import '../style/App.css';
 import MemberSelector, {MemberAddModal, MemberSelectorFooter} from '../containers/MemberSelector';
-import PlayerPanel, {PlayerAddModal, PlayerSelectorFooter} from '../containers/PlayerPanel';
+import PlayerPanel, {PlayerAddModal, PlayerSelectorFooter} from '../containers/player/PlayerPanel';
 import Courts, {CourtAddModal} from "../containers/Courts";
 import {
     IonApp,
@@ -39,7 +39,7 @@ export default function App() {
         case PLAYER_PANE:
             customFooter = <PlayerSelectorFooter/>;
             pane = <PlayerPanel/>;
-            modal = <PlayerAddModal showModal={showModal} setShowModal={setShowModal}/>;
+            modal = <PlayerAddModal />;
             break;
 
         case COURT_PANE:

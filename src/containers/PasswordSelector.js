@@ -2,8 +2,7 @@ import React from 'react';
 import {selectPassword} from "../actions";
 import {IonButton} from "@ionic/react";
 
-// todo make this non exported, remove use in people reducer
-export const passwords = [
+const passwords = [
     'mouse',
     'ox',
     'tiger',

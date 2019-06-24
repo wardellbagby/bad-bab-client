@@ -13,6 +13,8 @@ export const FETCH_PLAYERS = 'FETCH_PLAYERS';
 export const FETCH_COURTS = 'FETCH_COURTS';
 export const FETCH_SESSIONS = 'FETCH_SESSIONS';
 
+export const CREATE_PLAYER = 'CREATE_PLAYER';
+
 export const SELECT_PLAYER = 'SELECT_PLAYER';
 export const DESELECT_PLAYERS = 'DESELECT_PLAYERS';
 export const UPDATE_PLAYER = 'UPDATE_PLAYER';
@@ -144,5 +146,26 @@ export function removePlayer(player) {
     return {
         type: REMOVE_PLAYER,
         payload: player
+    };
+}
+
+export function createPlayer(player) {
+    const result = axios.post(
+        `${BASE_URL}/players/add`,
+        player
+    )
+        .then(res => {
+            console.log(res);
+            console.log(res.data);
+            debugger
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        });
+
+    return {
+        type: CREATE_PLAYER,
+        payload : player
     };
 }

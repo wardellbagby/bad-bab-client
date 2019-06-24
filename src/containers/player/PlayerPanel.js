@@ -1,10 +1,12 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {cancelPlayerUpdate, playerFilterChanged, requestPlayers} from "../actions";
-import PlayerSlider from "../components/PlayerSlider";
+import {playerFilterChanged, requestPlayers} from "../../actions";
+import PlayerSlider from "../../components/player/PlayerSlider";
+import {Modal, ModalBody} from '../../components/Modal';
 
-import {IonFooter, IonLabel, IonList, IonListHeader, IonPopover, IonSearchbar, IonToolbar} from '@ionic/react';
-import PlayerPasswordForm from "../components/PlayerPasswordForm";
+import {IonFooter, IonLabel, IonList, IonListHeader, IonSearchbar, IonToolbar} from '@ionic/react';
+import PlayerEditModal from "../../components/player/PlayerEditModal";
+import PlayerCreateModal from "../../components/player/PlayerCreateModal";
 
 export default function PlayerPanel() {
     const [reservedPlayers, availablePlayers] = useSelector(state => state.people.filteredPlayers || state.people.partitionedPlayers);
@@ -52,24 +54,22 @@ export function PlayerSelectorFooter() {
 }
 
 export function PlayerAddModal() {
-    const dispatch = useDispatch();
 
-    const handleCancel = () => dispatch(cancelPlayerUpdate());
     const playerToUpdate = useSelector(state => state.selected.playerToUpdate);
-    let passwordForm = null;
+    let body = null;
 
     if (playerToUpdate) {
-        passwordForm = (
-            <PlayerPasswordForm player={playerToUpdate}/>
-        );
+        body = <PlayerEditModal player={playerToUpdate}/>;
+
+    } else {
+        body = <PlayerCreateModal/>;
     }
 
     return (
-        <IonPopover
-            isOpen={!!playerToUpdate}
-            onDidDismiss={() => handleCancel()}
-        >
-            {passwordForm}
-        </IonPopover>
+        <Modal>
+            <ModalBody>
+                {body}
+            </ModalBody>
+        </Modal>
     );
 }

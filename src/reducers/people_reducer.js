@@ -1,5 +1,6 @@
 import {
     CANCEL_MEMBER_CREATE,
+    CREATE_PLAYER,
     FETCH_COURTS,
     FETCH_MEMBERS,
     FETCH_PLAYERS,
@@ -9,7 +10,6 @@ import {
     UPDATE_PLAYER
 } from "../actions/index";
 import _ from 'lodash';
-import {passwords} from "../containers/PasswordSelector";
 
 const defaultState = {
     members: [],
@@ -26,21 +26,31 @@ const CHUNK_SIZE = 3;
 
 export default function (state = defaultState, action) {
     let payload;
+    let players;
 
     switch (action.type) {
         case FETCH_PLAYERS:
             payload = action.payload;
 
-            let players = payload && payload.data && payload.data.players ? payload.data.players : [];
+            players = payload && payload.data && payload.data.players ? payload.data.players : [];
 
             players = _.sortBy(players, (player) => player.name);
 
             players = _.each(players, (player) => player.name = _.startCase(player.name));
 
-            // todo: remove this logic, make the imported passwords non exported
-            players = _.each(players, (player) => player.password = player.password || _.sample(passwords));
+            return updateStateForPlayers(state, [...players]);
 
-            return {...state, players, partitionedPlayers: partitionedPlayerList(players, state.reservedPlayerNames)};
+        case CREATE_PLAYER:
+            const player = action.payload;
+            players = state.players;
+
+            players.push(player);
+
+            players = _.sortBy(players, (player) => player.name);
+
+            players = _.each(players, (player) => player.name = _.startCase(player.name));
+
+            return updateStateForPlayers(state, [...players]);
 
         case FETCH_MEMBERS:
             payload = action.payload;
@@ -75,7 +85,6 @@ export default function (state = defaultState, action) {
                 filteredMembers.push([{name: memberNameFilter, _id: "searchedMember", isNew: true}]);
             }
 
-
             return {...state, filteredMembers};
 
         case CANCEL_MEMBER_CREATE:
@@ -83,22 +92,20 @@ export default function (state = defaultState, action) {
 
         case REMOVE_PLAYER:
             const playerToRemove = action.payload;
-            return {...state, players: _.reject(state.players, playerToRemove)};
+            return updateStateForPlayers(state, _.reject(state.players, playerToRemove));
 
         case UPDATE_PLAYER:
             updatePlayerInformation(action.payload);
-            return {...state, players: [...state.players]}
+            return updateStateForPlayers(state, [...state.players]);
 
         case FETCH_COURTS:
             let reservedPlayerNames = _.flatten(_.map(action.payload.data.reservations, 'players'));
             reservedPlayerNames = _.map(reservedPlayerNames, _.startCase);
 
-            return {
+            return updateStateForPlayers({
                 ...state,
-                reservedPlayerNames,
-                partitionedPlayers: partitionedPlayerList(state.players, reservedPlayerNames),
-                filteredPlayers: filteredPlayerList(state.players, state.reservedPlayerNames, state.playerNameFilter)
-            };
+                reservedPlayerNames
+            });
     }
 
     return state;
@@ -141,4 +148,13 @@ function filteredPlayerList(players, reservedPlayerNames, playerNameFilter) {
     }
 
     return filteredPlayers;
+}
+
+function updateStateForPlayers(state, players = state.players) {
+    return {
+        ...state,
+        players,
+        partitionedPlayers: partitionedPlayerList(players, state.reservedPlayerNames),
+        filteredPlayers: filteredPlayerList(players, state.reservedPlayerNames, state.playerNameFilter)
+    }
 }

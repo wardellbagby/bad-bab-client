@@ -1,6 +1,6 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {removePlayer, selectPlayer, startUpdatingPlayer} from "../actions";
+import {removePlayer, selectPlayer, startUpdatingPlayer} from "../../actions";
 import _ from 'lodash';
 import {IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel} from '@ionic/react';
 
@@ -22,7 +22,10 @@ export default function PlayerSlider({player}) {
             </IonItem>
 
             <IonItemOptions side="end">
-                <IonItemOption color="light" onClick={handleEditButton}>
+                <IonItemOption color="light"
+                               onClick={handleEditButton}
+                               data-toggle="modal"
+                               data-target="#pageModal">
                     <IonIcon slot="icon-only" name="create"/>
                 </IonItemOption>
 
