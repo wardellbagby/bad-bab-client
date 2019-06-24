@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import '../style/App.css';
-import MemberSelector, {MemberSelectorFooter, MemberAddModal} from '../containers/MemberSelector';
-import PlayerSelector, {PlayerSelectorFooter, PlayerAddModal} from '../containers/PlayerSelector';
-import Courts from "../containers/Courts";
+import MemberSelector, {MemberAddModal, MemberSelectorFooter} from '../containers/MemberSelector';
+import PlayerPanel, {PlayerAddModal, PlayerSelectorFooter} from '../containers/PlayerPanel';
+import Courts, {CourtAddModal} from "../containers/Courts";
 import {
     IonApp,
     IonContent,
@@ -26,6 +26,11 @@ export default function App() {
     const [selectedPane, setSelectedPane] = useState(PLAYER_PANE);
     const [showModal, setShowModal] = useState(false);
 
+    const handlePanelSelection = (e) => {
+        setShowModal(false);
+        setSelectedPane(e.detail.value);
+    };
+
     let customFooter = null;
     let pane = null;
     let modal = null;
@@ -33,12 +38,13 @@ export default function App() {
     switch (selectedPane) {
         case PLAYER_PANE:
             customFooter = <PlayerSelectorFooter/>;
-            pane = <PlayerSelector/>;
+            pane = <PlayerPanel/>;
             modal = <PlayerAddModal showModal={showModal} setShowModal={setShowModal}/>;
             break;
 
         case COURT_PANE:
             pane = <Courts/>;
+            modal = <CourtAddModal/>;
             break;
 
         case MEMBER_PANE:
@@ -50,7 +56,7 @@ export default function App() {
     const header = (
         <IonHeader>
             <IonToolbar class="header">
-                <IonSegment onIonChange={(e) => setSelectedPane(e.detail.value)} value={selectedPane}>
+                <IonSegment onIonChange={handlePanelSelection} value={selectedPane}>
                     <IonSegmentButton value={PLAYER_PANE}>
                         <IonLabel>Players</IonLabel>
                     </IonSegmentButton>
@@ -70,7 +76,7 @@ export default function App() {
             {pane}
 
             <IonFab vertical="bottom" horizontal="end" slot="fixed">
-                <IonFabButton onClick={() => setShowModal(true)}>
+                <IonFabButton onClick={() => setShowModal(true)} data-toggle="modal" data-target="#pageModal">
                     <IonIcon name="add"/>
                 </IonFabButton>
             </IonFab>

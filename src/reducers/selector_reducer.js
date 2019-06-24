@@ -1,6 +1,8 @@
 import {
     CANCEL_MEMBER_CREATE,
-    CANCEL_PLAYER_UPDATE, FILTER_MEMBER,
+    CANCEL_PLAYER_UPDATE,
+    DESELECT_PLAYERS,
+    FILTER_MEMBER,
     FILTER_PLAYER,
     REMOVE_PLAYER,
     SELECT_MEMBER,
@@ -30,6 +32,8 @@ export default function (state = defaultState, action) {
             const players = updatePlayerSelections({...state.players}, player);
 
             return {...state, players};
+        case DESELECT_PLAYERS:
+            return {...state, players: {}};
 
         case START_UPDATING_PLAYER:
             player = action.payload;

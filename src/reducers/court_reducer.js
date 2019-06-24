@@ -1,6 +1,7 @@
 import {FETCH_COURTS} from "../actions/index";
 import _ from 'lodash';
 import moment from 'moment-timezone';
+const now = new Date();
 
 export default function (state = {current: [], upcoming: []}, action) {
 
@@ -36,7 +37,7 @@ function courtInTimezone(court) {
     }
 }
 
-function areReservationsAdjacent(previous, next) {
+function reservationsCanBeCombined(previous, next) {
     return previous &&
         previous.courtNumber === next.courtNumber &&
         previous.randoms === next.randoms &&
@@ -46,20 +47,17 @@ function areReservationsAdjacent(previous, next) {
 function mergeReservations(reservations) {
     return _.reduceRight(reservations, function (flattened, next) {
         const previous = _.last(flattened);
-        if (areReservationsAdjacent(previous, next)) {
+        if (reservationsCanBeCombined(previous, next)) {
             previous.endAt = next.startAt;
+            previous.isCurrentCourt |= next.isCurrentCourt;
             return flattened;
         }
         return flattened.concat(next);
     }, []);
 }
 
-function now() {
-    return new Date(1559108029420);
-}
-
 function formatCurrentCourt({courtNumber, endAt}) {
-    const duration = moment.duration(endAt - now());
+    const duration = moment.duration(endAt - now);
     return {
         courtNumber,
         time: `${formatTime(duration)} remaining`
@@ -67,7 +65,7 @@ function formatCurrentCourt({courtNumber, endAt}) {
 }
 
 function formatUpcomingCourt({courtNumber, startAt}) {
-    const duration = moment.duration(startAt - now());
+    const duration = moment.duration(startAt - now);
 
     return {
         courtNumber,
