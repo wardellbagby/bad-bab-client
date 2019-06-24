@@ -80,28 +80,7 @@ export function CourtAddModal() {
                 <PlayerSelector availablePlayersOnly/>
             </ModalBody>
 
-            <ModalFooter>
-                <IonItem className="w-100" lines="none">
-                    <IonButton color="danger"
-                               onClick={handleCancel}
-                               slot="start"
-                               size="medium"
-                               data-dismiss="modal"
-                    >
-                        <IonIcon slot="icon-only" name="remove-circle"/>
-                    </IonButton>
-
-                    <IonButton color="success"
-                               onClick={handleCreateCourt}
-                               slot="end"
-                               data-dismiss="modal"
-                               size="medium"
-                    >
-                        <IonIcon slot="icon-only" name="checkmark-circle"/>
-                    </IonButton>
-                </IonItem>
-
-            </ModalFooter>
+            <ModalFooter onCancel={handleCancel} onSuccess={handleCreateCourt}/>
 
         </Modal>
     );

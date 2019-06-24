@@ -1,4 +1,5 @@
 import React from 'react';
+import {IonButton, IonIcon, IonItem} from "@ionic/react";
 
 export function Modal({children}) {
     return (
@@ -21,10 +22,28 @@ export function ModalHeader({children}) {
     );
 }
 
-export function ModalFooter({children}) {
+export function ModalFooter({onCancel, onSuccess}) {
     return (
         <div className="modal-footer">
-            {children}
+            <IonItem className="w-100" lines="none">
+                <IonButton color="danger"
+                           onClick={onCancel}
+                           slot="start"
+                           size="medium"
+                           data-dismiss="modal"
+                >
+                    <IonIcon slot="icon-only" name="remove-circle"/>
+                </IonButton>
+
+                <IonButton color="success"
+                           onClick={onSuccess}
+                           slot="end"
+                           data-dismiss="modal"
+                           size="medium"
+                >
+                    <IonIcon slot="icon-only" name="checkmark-circle"/>
+                </IonButton>
+            </IonItem>
         </div>
     );
 }
