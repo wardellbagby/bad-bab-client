@@ -33,7 +33,7 @@ function courtInTimezone(court) {
         startAt: moment(court.startAt).tz('America/Los_Angeles'),
         endAt: moment(court.endAt).tz('America/Los_Angeles'),
         randoms: court.randoms,
-        isCurrentCourt: now() - court.startAt >= 0
+        isCurrentCourt: now - court.startAt >= 0
     }
 }
 
