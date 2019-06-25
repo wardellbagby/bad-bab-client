@@ -19,7 +19,8 @@ const defaultState = {
     password: null,
     playerToUpdate: null,
     playerNameFilter: null,
-    memberNameFilter: null
+    memberNameFilter: null,
+    playerNames: []
 };
 
 export default function (state = defaultState, action) {
@@ -31,9 +32,9 @@ export default function (state = defaultState, action) {
             player = action.payload;
             const players = updatePlayerSelections({...state.players}, player);
 
-            return {...state, players};
+            return {...state, players, playerNames: _.map(players, "name")};
         case DESELECT_PLAYERS:
-            return {...state, players: {}};
+            return {...state, players: {}, playerNames: []};
 
         case START_UPDATING_PLAYER:
             player = action.payload;

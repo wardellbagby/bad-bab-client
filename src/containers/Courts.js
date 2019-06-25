@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {deselectPlayers, requestCourts} from "../actions";
+import {createCourt, deselectPlayers, requestCourts} from "../actions";
 import Court from "../components/Court";
 import PlayerSelector from '../containers/PlayerSelector';
 import {Modal, ModalBody, ModalFooter, ModalHeader} from '../components/Modal';
-import {IonButton, IonIcon, IonInput, IonItem, IonLabel, IonList, IonListHeader} from "@ionic/react";
+import {IonInput, IonItem, IonLabel, IonList, IonListHeader} from "@ionic/react";
 
 export default function Courts() {
     const {current, upcoming} = useSelector(state => state.courts);
@@ -48,11 +48,13 @@ export default function Courts() {
 export function CourtAddModal() {
     const dispatch = useDispatch();
 
-    let [courtNumber, setCourtNumber] = useState(0);
-    let [delay, setDelay] = useState(0);
+    const [courtNumber, setCourtNumber] = useState(0);
+    const [delay, setDelay] = useState(0);
+    const names = useSelector(state => state.selected.playerNames);
+
     const handleCancel = () => dispatch(deselectPlayers());
     const handleCreateCourt = () => {
-        // TODO: send server request
+        createCourt({courtNumber, names});
         dispatch(deselectPlayers());
     };
 
@@ -77,7 +79,7 @@ export function CourtAddModal() {
             </ModalHeader>
 
             <ModalBody>
-                <PlayerSelector availablePlayersOnly/>
+                <PlayerSelector/>
             </ModalBody>
 
             <ModalFooter onCancel={handleCancel} onSuccess={handleCreateCourt}/>

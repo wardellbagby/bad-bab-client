@@ -8,22 +8,28 @@ const PLAYERS = "players";
 const COURTS = "courts";
 const SESSIONS = "sessions";
 
-const ADD_PLAYER_ENDPOINT = "players/add";
+const CREATE_PLAYER_ENDPOINT = "players/add";
 const DELETE_PLAYER_ENDPOINT = "players/delete";
+
+const CREATE_COURT_ENDPOINT = "courts/register";
 
 export const FETCH_MEMBERS = 'FETCH_MEMBERS';
 export const FETCH_PLAYERS = 'FETCH_PLAYERS';
 export const FETCH_COURTS = 'FETCH_COURTS';
 export const FETCH_SESSIONS = 'FETCH_SESSIONS';
 
+// non get player requests
 export const CREATE_PLAYER = 'CREATE_PLAYER';
+export const REMOVE_PLAYER = 'REMOVE_PLAYER';
+export const UPDATE_PLAYER = 'UPDATE_PLAYER';
+
+// non get Court requests
+export const CREATE_COURT = 'CREATE_COURT';
 
 export const SELECT_PLAYER = 'SELECT_PLAYER';
 export const DESELECT_PLAYERS = 'DESELECT_PLAYERS';
-export const UPDATE_PLAYER = 'UPDATE_PLAYER';
 export const START_UPDATING_PLAYER = 'START_UPDATING_PLAYER';
 export const CANCEL_PLAYER_UPDATE = 'CANCEL_PLAYER_UPDATE';
-export const REMOVE_PLAYER = 'REMOVE_PLAYER';
 export const SELECT_MEMBER = 'SELECT_MEMBER';
 export const SELECT_PASSWORD = 'SELECT_PASSWORD';
 
@@ -184,7 +190,7 @@ export async function createPlayer(player) {
     let payload = null;
 
     await axios.post(
-        BASE_URL + ADD_PLAYER_ENDPOINT,
+        BASE_URL + CREATE_PLAYER_ENDPOINT,
         player
     ).then(() => {
         payload = player
@@ -192,6 +198,27 @@ export async function createPlayer(player) {
         console.log(error);
         type = SET_TOAST;
         payload = "Unable to create the player";
+    });
+
+    return {
+        type,
+        payload
+    };
+}
+
+export async function createCourt(court) {
+    let type = CREATE_PLAYER;
+    let payload = null;
+
+    await axios.post(
+        BASE_URL + CREATE_COURT_ENDPOINT,
+        court
+    ).then(res => {
+        payload = res
+    }).catch(error => {
+        console.log(error);
+        type = SET_TOAST;
+        payload = "Unable to create the court";
     });
 
     return {
