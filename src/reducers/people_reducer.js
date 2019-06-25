@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 import {
     CANCEL_MEMBER_CREATE,
     CREATE_PLAYER,
@@ -36,7 +37,7 @@ export default function (state = defaultState, action) {
 
             players = _.sortBy(players, (player) => player.name);
 
-            players = _.each(players, (player) => player.name = _.startCase(player.name));
+            players = _.each(players, (player) => player.name = _.upperFirst(player.name));
 
             return updateStateForPlayers(state, [...players]);
 
@@ -48,7 +49,7 @@ export default function (state = defaultState, action) {
 
             players = _.sortBy(players, (player) => player.name);
 
-            players = _.each(players, (player) => player.name = _.startCase(player.name));
+            players = _.each(players, (player) => player.name = _.upperFirst(player.name));
 
             return updateStateForPlayers(state, [...players]);
 
@@ -58,7 +59,7 @@ export default function (state = defaultState, action) {
 
             members = _.sortBy(members, (member) => member.playerName);
 
-            members = _.each(members, (member) => member.name = _.startCase(member.playerName));
+            members = _.each(members, (member) => member.name = _.upperFirst(member.playerName));
 
             const chunkedMembers = chunkify(members);
 
@@ -100,7 +101,7 @@ export default function (state = defaultState, action) {
 
         case FETCH_COURTS:
             let reservedPlayerNames = _.flatten(_.map(action.payload.data.reservations, 'players'));
-            reservedPlayerNames = _.map(reservedPlayerNames, _.startCase);
+            reservedPlayerNames = _.map(reservedPlayerNames, _.upperFirst);
 
             return updateStateForPlayers({
                 ...state,
