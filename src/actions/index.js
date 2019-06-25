@@ -9,6 +9,7 @@ const COURTS = "courts";
 const SESSIONS = "sessions";
 
 const ADD_PLAYER_ENDPOINT = "players/add";
+const DELETE_PLAYER_ENDPOINT = "players/delete";
 
 export const FETCH_MEMBERS = 'FETCH_MEMBERS';
 export const FETCH_PLAYERS = 'FETCH_PLAYERS';
@@ -132,8 +133,19 @@ export function startUpdatingPlayer(player) {
     };
 }
 
-export function updatePlayer(player, name, password) {
-    //TODO : send action to server to update player information
+export async function updatePlayer(player, name, password) {
+    const fail = {type: SET_TOAST, payload: "Unable to update player"};
+
+    const removeResult = await removePlayer(player);
+    if (removeResult.type === SET_TOAST) {
+        return fail;
+    }
+
+    const createResult = await createPlayer({name, password});
+    if (createResult.type === SET_TOAST) {
+        return fail;
+    }
+
     return {
         type: UPDATE_PLAYER,
         payload: {player, name, password}
@@ -146,11 +158,24 @@ export function cancelPlayerUpdate() {
     };
 }
 
-export function removePlayer(player) {
-    //TODO : send action to the server
+export async function removePlayer(player) {
+    let type = REMOVE_PLAYER;
+    let payload = null;
+
+    await axios.post(
+        BASE_URL + DELETE_PLAYER_ENDPOINT,
+        player
+    ).then(() => {
+        payload = player
+    }).catch(error => {
+        console.log(error);
+        type = SET_TOAST;
+        payload = "Unable to delete the player";
+    });
+
     return {
-        type: REMOVE_PLAYER,
-        payload: player
+        type,
+        payload
     };
 }
 
@@ -166,7 +191,7 @@ export async function createPlayer(player) {
     }).catch(error => {
         console.log(error);
         type = SET_TOAST;
-        payload = "Something went wrong when trying to create the player";
+        payload = "Unable to create the player";
     });
 
     return {
