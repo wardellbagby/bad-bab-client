@@ -17,6 +17,7 @@ export default function MemberSelect({member, highlighted: isNewMember}) {
     return (
         <IonLabel
             onClick={handleSelectMember}
+            data-toggle="modal" data-target="#pageModal"
         >
             {displayName}
         </IonLabel>

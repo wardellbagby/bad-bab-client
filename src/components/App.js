@@ -1,7 +1,7 @@
 /* eslint-disable default-case */
 import React, {useState} from 'react';
 import '../style/App.css';
-import MemberSelector, {MemberAddModal, MemberSelectorFooter} from '../containers/MemberSelector';
+import MemberPane, {MemberCreateModal, MemberSelectorFooter} from '../containers/member/MemberPanel';
 import PlayerPanel, {PlayerAddModal, PlayerSelectorFooter} from '../containers/player/PlayerPanel';
 import CourtPanel, {CourtCreateModal} from '../containers/court/CourtPanel';
 import {
@@ -26,12 +26,8 @@ const MEMBER_PANE = "MEMBER_PANE";
 
 export default function App() {
     const [selectedPane, setSelectedPane] = useState(COURT_PANE);
-    const [showModal, setShowModal] = useState(false);
 
-    const handlePanelSelection = (e) => {
-        setShowModal(false);
-        setSelectedPane(e.detail.value);
-    };
+    const handlePanelSelection = (e) => setSelectedPane(e.detail.value);
 
     let customFooter = null;
     let pane = null;
@@ -51,8 +47,8 @@ export default function App() {
 
         case MEMBER_PANE:
             customFooter = <MemberSelectorFooter/>;
-            pane = <MemberSelector/>;
-            modal = <MemberAddModal showModal={showModal} setShowModal={setShowModal}/>;
+            pane = <MemberPane/>;
+            modal = <MemberCreateModal />;
     }
 
     const header = (
@@ -78,7 +74,7 @@ export default function App() {
             {pane}
 
             <IonFab vertical="bottom" horizontal="end" slot="fixed">
-                <IonFabButton onClick={() => setShowModal(true)} data-toggle="modal" data-target="#pageModal">
+                <IonFabButton data-toggle="modal" data-target="#pageModal">
                     <IonIcon name="add"/>
                 </IonFabButton>
             </IonFab>
