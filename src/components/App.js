@@ -1,8 +1,9 @@
+/* eslint-disable default-case */
 import React, {useState} from 'react';
 import '../style/App.css';
-import MemberSelector, {MemberAddModal, MemberSelectorFooter} from '../containers/MemberSelector';
+import MemberPane, {MemberCreateModal, MemberSelectorFooter} from '../containers/member/MemberPanel';
 import PlayerPanel, {PlayerAddModal, PlayerSelectorFooter} from '../containers/player/PlayerPanel';
-import Courts, {CourtAddModal} from "../containers/Courts";
+import CourtPanel, {CourtCreateModal} from '../containers/court/CourtPanel';
 import {
     IonApp,
     IonContent,
@@ -24,13 +25,9 @@ const COURT_PANE = "COURT_PANE";
 const MEMBER_PANE = "MEMBER_PANE";
 
 export default function App() {
-    const [selectedPane, setSelectedPane] = useState(PLAYER_PANE);
-    const [showModal, setShowModal] = useState(false);
+    const [selectedPane, setSelectedPane] = useState(COURT_PANE);
 
-    const handlePanelSelection = (e) => {
-        setShowModal(false);
-        setSelectedPane(e.detail.value);
-    };
+    const handlePanelSelection = (e) => setSelectedPane(e.detail.value);
 
     let customFooter = null;
     let pane = null;
@@ -44,25 +41,25 @@ export default function App() {
             break;
 
         case COURT_PANE:
-            pane = <Courts/>;
-            modal = <CourtAddModal/>;
+            pane = <CourtPanel/>;
+            modal = <CourtCreateModal/>;
             break;
 
         case MEMBER_PANE:
             customFooter = <MemberSelectorFooter/>;
-            pane = <MemberSelector/>;
-            modal = <MemberAddModal showModal={showModal} setShowModal={setShowModal}/>;
+            pane = <MemberPane/>;
+            modal = <MemberCreateModal />;
     }
 
     const header = (
         <IonHeader>
             <IonToolbar class="header">
                 <IonSegment onIonChange={handlePanelSelection} value={selectedPane}>
-                    <IonSegmentButton value={PLAYER_PANE}>
-                        <IonLabel>Players</IonLabel>
-                    </IonSegmentButton>
                     <IonSegmentButton value={COURT_PANE}>
                         <IonLabel>Courts</IonLabel>
+                    </IonSegmentButton>
+                    <IonSegmentButton value={PLAYER_PANE}>
+                        <IonLabel>Players</IonLabel>
                     </IonSegmentButton>
                     <IonSegmentButton value={MEMBER_PANE}>
                         <IonLabel>Members</IonLabel>
@@ -77,7 +74,7 @@ export default function App() {
             {pane}
 
             <IonFab vertical="bottom" horizontal="end" slot="fixed">
-                <IonFabButton onClick={() => setShowModal(true)} data-toggle="modal" data-target="#pageModal">
+                <IonFabButton data-toggle="modal" data-target="#pageModal">
                     <IonIcon name="add"/>
                 </IonFabButton>
             </IonFab>
