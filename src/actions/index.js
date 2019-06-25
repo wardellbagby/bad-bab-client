@@ -42,10 +42,16 @@ export const CANCEL_MEMBER_CREATE = 'CANCEL_MEMBER_CREATE';
 export const SET_TOAST = "SET_TOAST";
 export const CLEAR_TOAST = "CLEAR_TOAST";
 
+// Setup the content-type and make sure data is form-encoded.
+axios.interceptors.request.use((config) => {
+    config.headers["Content-type"] = 'application/x-www-form-urlencoded'
+    config.data = qs.stringify(config.data)
+    return config;
+});
 
 export function requestMembers() {
     // const request = getRequest(MEMBERS);
-    const request = {data: sampleMemberData};
+    const request = { data: sampleMemberData };
 
     return {
         type: FETCH_MEMBERS,
@@ -141,21 +147,21 @@ export function startUpdatingPlayer(player) {
 }
 
 export async function updatePlayer(player, name, password) {
-    const fail = {type: SET_TOAST, payload: "Unable to update player"};
+    const fail = { type: SET_TOAST, payload: "Unable to update player" };
 
     const removeResult = await removePlayer(player);
     if (removeResult.type === SET_TOAST) {
         return fail;
     }
 
-    const createResult = await createPlayer({name, password});
+    const createResult = await createPlayer({ name, password });
     if (createResult.type === SET_TOAST) {
         return fail;
     }
 
     return {
         type: UPDATE_PLAYER,
-        payload: {player, name, password}
+        payload: { player, name, password }
     };
 }
 
@@ -213,12 +219,7 @@ export async function createCourt(court) {
 
     await axios.post(
         BASE_URL + CREATE_COURT_ENDPOINT,
-        qs.stringify(court),
-        {
-            headers: {
-                'Content-type': 'application/x-www-form-urlencoded'
-            }
-        }
+        court
     ).then(res => {
         payload = res
     }).catch(error => {
