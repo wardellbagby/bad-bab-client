@@ -17,6 +17,7 @@ import {
 } from '@ionic/react';
 import '@ionic/core/css/core.css';
 import '@ionic/core/css/ionic.bundle.css';
+import Toast from "./Toast";
 
 const PLAYER_PANE = "PLAYER_PANE";
 const COURT_PANE = "COURT_PANE";
@@ -82,6 +83,8 @@ export default function App() {
             </IonFab>
 
             {modal}
+
+            <Toast/>
         </IonContent>
     );
 

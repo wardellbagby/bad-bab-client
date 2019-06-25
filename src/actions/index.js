@@ -8,6 +8,8 @@ const PLAYERS = "players";
 const COURTS = "courts";
 const SESSIONS = "sessions";
 
+const ADD_PLAYER_ENDPOINT = "players/add";
+
 export const FETCH_MEMBERS = 'FETCH_MEMBERS';
 export const FETCH_PLAYERS = 'FETCH_PLAYERS';
 export const FETCH_COURTS = 'FETCH_COURTS';
@@ -28,6 +30,9 @@ export const FILTER_PLAYER = 'FILTER_PLAYER';
 export const FILTER_MEMBER = 'FILTER_MEMBER';
 
 export const CANCEL_MEMBER_CREATE = 'CANCEL_MEMBER_CREATE';
+
+export const SET_TOAST = "SET_TOAST";
+export const CLEAR_TOAST = "CLEAR_TOAST";
 
 
 export function requestMembers() {
@@ -149,23 +154,30 @@ export function removePlayer(player) {
     };
 }
 
-export function createPlayer(player) {
-    const result = axios.post(
-        `${BASE_URL}/players/add`,
+export async function createPlayer(player) {
+    let type = CREATE_PLAYER;
+    let payload = null;
+
+    await axios.post(
+        BASE_URL + ADD_PLAYER_ENDPOINT,
         player
-    )
-        .then(res => {
-            console.log(res);
-            console.log(res.data);
-            debugger
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        });
+    ).then(() => {
+        payload = player
+    }).catch(error => {
+        console.log(error);
+        type = SET_TOAST;
+        payload = "Something went wrong when trying to create the player";
+    });
 
     return {
-        type: CREATE_PLAYER,
-        payload : player
+        type,
+        payload
+    };
+}
+
+
+export function clearToast() {
+    return {
+        type: CLEAR_TOAST
     };
 }
