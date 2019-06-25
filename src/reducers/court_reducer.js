@@ -1,30 +1,50 @@
-import {FETCH_COURTS} from "../actions/index";
+/* eslint-disable default-case */
+import { FETCH_COURTS, CREATE_COURT } from "../actions/index";
 import _ from 'lodash';
 import moment from 'moment-timezone';
 const now = new Date();
 
-export default function (state = {current: [], upcoming: []}, action) {
+export default function (state = { current: [], upcoming: [], reservations: [] }, action) {
+
+    let reservations;
 
     switch (action.type) {
         case FETCH_COURTS:
-            const squareReservations = _.reject(action.payload.data.reservations, 'randoms');
-            const reservations = _.map(squareReservations, courtInTimezone);
+            reservations = action.payload.data.reservations;
+            return splitReservations(reservations);
+        case CREATE_COURT:
+            const court = action.payload.data.reservation;
+            reservations = state.reservations;
 
-            // if we find that "randoms" are important information to view,
-            // then we can just partition by randoms to display later
+            reservations.push(court);
 
-            const sortedReservations = _.sortBy(reservations, ['courtNumber', 'startAt']);
-            const courts = mergeReservations(sortedReservations);
-            const sortedCourts = _.sortBy(courts, ['startAt']);
-            const [currentCourts, upcomingCourts] = _.partition(sortedCourts, 'isCurrentCourt');
-
-            const current = _.map(currentCourts, formatCurrentCourt);
-            const upcoming = _.map(upcomingCourts, formatUpcomingCourt);
-
-            return {...state, current, upcoming};
+            return splitReservations(reservations);
     }
 
     return state;
+}
+
+function splitReservations(reservations, state) {
+    reservations = _.reject(reservations, 'randoms');
+    reservations = _.map(reservations, courtInTimezone);
+
+    // if we find that "randoms" are important information to view,
+    // then we can just partition by randoms to display later
+
+    const sortedReservations = _.sortBy(reservations, ['courtNumber', 'startAt']);
+    const courts = mergeReservations(sortedReservations);
+    const sortedCourts = _.sortBy(courts, ['startAt']);
+    const [currentCourts, upcomingCourts] = _.partition(sortedCourts, 'isCurrentCourt');
+
+    const current = _.map(currentCourts, formatCurrentCourt);
+    const upcoming = _.map(upcomingCourts, formatUpcomingCourt);
+
+    return {
+        ...state,
+        current,
+        upcoming,
+        reservations
+    };
 }
 
 function courtInTimezone(court) {
@@ -56,7 +76,7 @@ function mergeReservations(reservations) {
     }, []);
 }
 
-function formatCurrentCourt({courtNumber, endAt}) {
+function formatCurrentCourt({ courtNumber, endAt }) {
     const duration = moment.duration(endAt - now);
     return {
         courtNumber,
@@ -64,7 +84,7 @@ function formatCurrentCourt({courtNumber, endAt}) {
     };
 }
 
-function formatUpcomingCourt({courtNumber, startAt}) {
+function formatUpcomingCourt({ courtNumber, startAt }) {
     const duration = moment.duration(startAt - now);
 
     return {

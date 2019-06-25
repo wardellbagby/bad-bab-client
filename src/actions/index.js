@@ -208,7 +208,7 @@ export async function createPlayer(player) {
 }
 
 export async function createCourt(court) {
-    let type = CREATE_PLAYER;
+    let type = CREATE_COURT;
     let payload = null;
 
     await axios.post(

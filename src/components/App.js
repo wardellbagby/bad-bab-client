@@ -1,8 +1,9 @@
+/* eslint-disable default-case */
 import React, {useState} from 'react';
 import '../style/App.css';
 import MemberSelector, {MemberAddModal, MemberSelectorFooter} from '../containers/MemberSelector';
 import PlayerPanel, {PlayerAddModal, PlayerSelectorFooter} from '../containers/player/PlayerPanel';
-import Courts, {CourtAddModal} from "../containers/Courts";
+import CourtPanel, {CourtCreateModal} from '../containers/court/CourtPanel';
 import {
     IonApp,
     IonContent,
@@ -24,7 +25,7 @@ const COURT_PANE = "COURT_PANE";
 const MEMBER_PANE = "MEMBER_PANE";
 
 export default function App() {
-    const [selectedPane, setSelectedPane] = useState(PLAYER_PANE);
+    const [selectedPane, setSelectedPane] = useState(COURT_PANE);
     const [showModal, setShowModal] = useState(false);
 
     const handlePanelSelection = (e) => {
@@ -44,8 +45,8 @@ export default function App() {
             break;
 
         case COURT_PANE:
-            pane = <Courts/>;
-            modal = <CourtAddModal/>;
+            pane = <CourtPanel/>;
+            modal = <CourtCreateModal/>;
             break;
 
         case MEMBER_PANE:
@@ -58,11 +59,11 @@ export default function App() {
         <IonHeader>
             <IonToolbar class="header">
                 <IonSegment onIonChange={handlePanelSelection} value={selectedPane}>
-                    <IonSegmentButton value={PLAYER_PANE}>
-                        <IonLabel>Players</IonLabel>
-                    </IonSegmentButton>
                     <IonSegmentButton value={COURT_PANE}>
                         <IonLabel>Courts</IonLabel>
+                    </IonSegmentButton>
+                    <IonSegmentButton value={PLAYER_PANE}>
+                        <IonLabel>Players</IonLabel>
                     </IonSegmentButton>
                     <IonSegmentButton value={MEMBER_PANE}>
                         <IonLabel>Members</IonLabel>
