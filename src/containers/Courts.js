@@ -54,7 +54,7 @@ export function CourtAddModal() {
 
     const handleCancel = () => dispatch(deselectPlayers());
     const handleCreateCourt = () => {
-        createCourt({courtNumber, names});
+        createCourt({courtNumber, names, delay});
         dispatch(deselectPlayers());
     };
 

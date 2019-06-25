@@ -1,4 +1,5 @@
 import axios from "axios";
+import qs from "querystring";
 import sampleMemberData from '../sample-data/members'
 
 const BASE_URL = "https://bab.moepas.com/api/";
@@ -212,7 +213,12 @@ export async function createCourt(court) {
 
     await axios.post(
         BASE_URL + CREATE_COURT_ENDPOINT,
-        court
+        qs.stringify(court),
+        {
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            }
+        }
     ).then(res => {
         payload = res
     }).catch(error => {
