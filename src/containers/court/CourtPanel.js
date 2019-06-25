@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {requestCourts} from "../../actions";
+import {requestCourts, requestPlayers} from "../../actions";
 import Court from "../../components/Court";
 import {IonLabel, IonList, IonListHeader} from "@ionic/react";
 export { CourtCreateModal } from '../../components/court/CourtCreateModal';
@@ -11,6 +11,7 @@ export default function Courts() {
 
     useEffect(() => {
         dispatch(requestCourts());
+        dispatch(requestPlayers());
     }, []);
 
     const courtsFor = (courtList, isCurrentCourt) => {
