@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 import {
     CANCEL_MEMBER_CREATE,
     CANCEL_PLAYER_UPDATE,
@@ -32,7 +33,7 @@ export default function (state = defaultState, action) {
             player = action.payload;
             const players = updatePlayerSelections({...state.players}, player);
 
-            return {...state, players, playerNames: _.map(players, "name")};
+            return {...state, players, playerNames: _.map(players, (player) => _.toLower(player.name))};
         case DESELECT_PLAYERS:
             return {...state, players: {}, playerNames: []};
 
