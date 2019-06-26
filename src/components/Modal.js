@@ -1,7 +1,7 @@
 import React from 'react';
 import {IonButton, IonIcon, IonItem} from "@ionic/react";
 
-export function Modal({children}) {
+export function Modal({ children }) {
     return (
         <div className="modal fade" id="pageModal"
              role="dialog" aria-labelledby="pageModalScrollableTitle" aria-hidden="true" data-backdrop="false">
@@ -14,7 +14,7 @@ export function Modal({children}) {
     );
 }
 
-export function ModalHeader({children}) {
+export function ModalHeader({ children }) {
     return (
         <div className="modal-header">
             {children}
@@ -22,7 +22,7 @@ export function ModalHeader({children}) {
     );
 }
 
-export function ModalFooter({onCancel, onSuccess}) {
+export function ModalFooter({ onCancel, onSuccess }) {
     return (
         <div className="modal-footer">
             <IonItem className="w-100" lines="none">
@@ -48,7 +48,7 @@ export function ModalFooter({onCancel, onSuccess}) {
     );
 }
 
-export function ModalBody({children}) {
+export function ModalBody({ children }) {
     return (
         <div className="modal-body">
             {children}

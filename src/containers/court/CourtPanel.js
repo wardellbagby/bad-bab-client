@@ -3,10 +3,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {requestCourts, requestPlayers} from "../../actions";
 import Court from "../../components/court/Court";
 import {IonLabel, IonList, IonListHeader} from "@ionic/react";
-export { CourtCreateModal } from '../../components/court/CourtCreateModal';
+
+export {CourtCreateModal} from '../../components/court/CourtCreateModal';
 
 export default function Courts() {
-    const {current, upcoming} = useSelector(state => state.courts);
+    const { current, upcoming } = useSelector(state => state.courts);
     const dispatch = useDispatch();
 
     useEffect(() => {

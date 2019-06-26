@@ -5,7 +5,7 @@ import {IonCardHeader, IonCardTitle, IonInput, IonItem, IonItemDivider, IonLabel
 import PasswordSelector from "../../containers/PasswordSelector";
 import {ModalFooter} from "../Modal";
 
-export default function PlayerEditModal({player}) {
+export default function PlayerEditModal({ player }) {
     const dispatch = useDispatch();
 
     const [newPlayerPassword, updateNewPlayerPassword] = useState(player.password);

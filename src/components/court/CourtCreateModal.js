@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { createCourt, deselectPlayers } from "../../actions";
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {createCourt, deselectPlayers} from "../../actions";
 import PlayerSelector from '../../containers/player/PlayerSelector';
-import { Modal, ModalBody, ModalFooter, ModalHeader } from '../Modal';
-import { IonInput, IonItem } from "@ionic/react";
+import {Modal, ModalBody, ModalFooter, ModalHeader} from '../Modal';
+import {IonInput, IonItem} from "@ionic/react";
 
 export function CourtCreateModal() {
     const dispatch = useDispatch();
@@ -24,25 +24,25 @@ export function CourtCreateModal() {
                 <IonItem lines="none">
                     <span className="mr-2 text-muted">Court Number:</span>
                     <IonInput placeholder="Enter Court Number"
-                        type="number"
-                        value={courtNumber}
-                        onIonChange={(e) => setCourtNumber(e.target.value)} />
+                              type="number"
+                              value={courtNumber}
+                              onIonChange={(e) => setCourtNumber(e.target.value)}/>
                 </IonItem>
 
                 <IonItem lines="none">
                     <span className="mr-2 text-muted">Delay:</span>
                     <IonInput placeholder="Enter Delay"
-                        type="number"
-                        value={delay}
-                        onIonChange={(e) => setDelay(e.target.value)} />
+                              type="number"
+                              value={delay}
+                              onIonChange={(e) => setDelay(e.target.value)}/>
                 </IonItem>
             </ModalHeader>
 
             <ModalBody>
-                <PlayerSelector />
+                <PlayerSelector/>
             </ModalBody>
 
-            <ModalFooter onCancel={handleCancel} onSuccess={handleCreateCourt} />
+            <ModalFooter onCancel={handleCancel} onSuccess={handleCreateCourt}/>
 
         </Modal>
     );

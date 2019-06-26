@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { createPlayer, cancelCreatingMember } from "../../actions";
+import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {cancelCreatingMember, createPlayer} from "../../actions";
 import PasswordSelector from "../../containers/PasswordSelector";
-import { IonCardHeader, IonCardTitle } from "@ionic/react";
+import {IonCardHeader, IonCardTitle} from "@ionic/react";
 import {ModalFooter} from "../Modal";
 
 export default function MemberPasswordForm({ member }) {
@@ -20,9 +20,9 @@ export default function MemberPasswordForm({ member }) {
 
 
             <PasswordSelector selectedPassword={memberPassword}
-                updatePassword={updateMemberPassword} />
+                              updatePassword={updateMemberPassword}/>
 
-                <ModalFooter
+            <ModalFooter
                 onCancel={handleCancel}
                 onSuccess={handlePlayerCreate}/>
         </>

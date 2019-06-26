@@ -30,42 +30,42 @@ export default function (state = defaultState, action) {
     switch (action.type) {
         case SELECT_PLAYER:
             player = action.payload;
-            const players = updatePlayerSelections({...state.players}, player);
+            const players = updatePlayerSelections({ ...state.players }, player);
 
-            return {...state, players, playerNames: _.map(players, (player) => _.toLower(player.name))};
+            return { ...state, players, playerNames: _.map(players, (player) => _.toLower(player.name)) };
         case DESELECT_PLAYERS:
-            return {...state, players: {}, playerNames: []};
+            return { ...state, players: {}, playerNames: [] };
 
         case START_UPDATING_PLAYER:
             player = action.payload;
-            return {...state, playerToUpdate: player};
+            return { ...state, playerToUpdate: player };
 
         case UPDATE_PLAYER:
-            return {...state, playerToUpdate: null};
+            return { ...state, playerToUpdate: null };
 
         case CANCEL_PLAYER_UPDATE:
-            return {...state, playerToUpdate: null};
+            return { ...state, playerToUpdate: null };
 
         case SELECT_MEMBER:
             const member = action.payload;
 
-            return {...state, memberToCreate: member};
+            return { ...state, memberToCreate: member };
 
         case CANCEL_MEMBER_CREATE:
-            return {...state, memberToCreate: null};
+            return { ...state, memberToCreate: null };
 
         case REMOVE_PLAYER:
-            return {...state, playerNameFilter: null};
+            return { ...state, playerNameFilter: null };
 
         case FILTER_PLAYER:
             const playerNameFilter = action.payload;
 
-            return {...state, playerNameFilter};
+            return { ...state, playerNameFilter };
 
         case FILTER_MEMBER:
             const memberNameFilter = action.payload;
 
-            return {...state, memberNameFilter};
+            return { ...state, memberNameFilter };
     }
 
     return state;

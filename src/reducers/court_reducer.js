@@ -1,7 +1,8 @@
 /* eslint-disable default-case */
-import { FETCH_COURTS, CREATE_COURT } from "../actions/index";
+import {CREATE_COURT, FETCH_COURTS} from "../actions/index";
 import _ from 'lodash';
 import moment from 'moment-timezone';
+
 const now = new Date();
 
 export default function (state = { current: [], upcoming: [], reservations: [] }, action) {

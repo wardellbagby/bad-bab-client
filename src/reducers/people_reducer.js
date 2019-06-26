@@ -63,7 +63,7 @@ export default function (state = defaultState, action) {
 
             const chunkedMembers = chunkify(members);
 
-            return {...state, members, chunkedMembers};
+            return { ...state, members, chunkedMembers };
 
         case FILTER_PLAYER:
             let playerNameFilter = action.payload;
@@ -83,13 +83,13 @@ export default function (state = defaultState, action) {
 
                 filteredMembers = chunkify(filteredMembers);
 
-                filteredMembers.push([{name: memberNameFilter, _id: "searchedMember", isNew: true}]);
+                filteredMembers.push([{ name: memberNameFilter, _id: "searchedMember", isNew: true }]);
             }
 
-            return {...state, filteredMembers};
+            return { ...state, filteredMembers };
 
         case CANCEL_MEMBER_CREATE:
-            return {...state, filteredMembers: null};
+            return { ...state, filteredMembers: null };
 
         case REMOVE_PLAYER:
             const playerToRemove = action.payload;
@@ -113,7 +113,7 @@ export default function (state = defaultState, action) {
 }
 
 // currying probably is not the best in production code but it is just so beautiful
-const nameContainsFilter = (nameFilter) => ({name}) => _.toLower(name).includes(_.toLower(nameFilter));
+const nameContainsFilter = (nameFilter) => ({ name }) => _.toLower(name).includes(_.toLower(nameFilter));
 
 function chunkify(list) {
     if (list.length === 0) {
@@ -129,7 +129,7 @@ function chunkify(list) {
     return list;
 }
 
-function updatePlayerInformation({player, name, password}) {
+function updatePlayerInformation({ player, name, password }) {
     player.name = name;
     player.password = password;
 }

@@ -4,7 +4,7 @@ import {removePlayer, selectPlayer, startUpdatingPlayer} from "../../actions";
 import _ from 'lodash';
 import {IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel} from '@ionic/react';
 
-export default function PlayerSlider({player}) {
+export default function PlayerSlider({ player }) {
     const selectedPlayers = useSelector(state => state.selected.players);
     const dispatch = useDispatch();
 

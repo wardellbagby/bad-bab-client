@@ -36,7 +36,7 @@ export default function App() {
     switch (selectedPane) {
         case PLAYER_PANE:
             pane = <PlayerPanel/>;
-            modal = <PlayerAddModal />;
+            modal = <PlayerAddModal/>;
             customFooter = <PlayerPanelFooter/>;
             break;
 
@@ -48,7 +48,7 @@ export default function App() {
         case MEMBER_PANE:
             customFooter = <MemberSelectorFooter/>;
             pane = <MemberPane/>;
-            modal = <MemberCreateModal />;
+            modal = <MemberCreateModal/>;
     }
 
     const header = (

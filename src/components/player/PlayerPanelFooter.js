@@ -13,7 +13,7 @@ export function PlayerPanelFooter() {
     return (
         <IonFooter>
             <IonToolbar>
-                <IonSearchbar style={{'--placeholder-color': 'red'}}
+                <IonSearchbar style={{ '--placeholder-color': 'red' }}
                               placeholder="Filter or add Player"
                               value={playerNameFilter}
                               onIonInput={updateFilter}/>

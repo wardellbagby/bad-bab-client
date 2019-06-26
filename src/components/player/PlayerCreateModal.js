@@ -12,7 +12,7 @@ export default function PlayerAddModal() {
     const [name, updateName] = useState("");
 
     const handleCancel = () => dispatch(cancelPlayerUpdate());
-    const handlePlayerCreate = () => dispatch(createPlayer({name, password}));
+    const handlePlayerCreate = () => dispatch(createPlayer({ name, password }));
     const handleNameChange = (e) => updateName(e.target.value);
 
     return (

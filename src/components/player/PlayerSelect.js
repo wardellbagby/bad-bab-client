@@ -4,7 +4,7 @@ import {selectPlayer} from "../../actions";
 import _ from 'lodash';
 import {IonCheckbox, IonItem, IonLabel} from '@ionic/react';
 
-export default function PlayerSelect({player, ignoreEdit}) {
+export default function PlayerSelect({ player, ignoreEdit }) {
     const selectedPlayers = useSelector(state => state.selected.players);
     const dispatch = useDispatch();
 

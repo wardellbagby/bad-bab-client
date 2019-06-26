@@ -17,7 +17,7 @@ const passwords = [
     'cat'
 ];
 
-export default function PasswordSelector({selectedPassword, updatePassword}) {
+export default function PasswordSelector({ selectedPassword, updatePassword }) {
     const colorForPassword = (password) => password === selectedPassword ? "medium" : "light";
     const handleUpdatePassword = (password) => () => updatePassword(password);
 
