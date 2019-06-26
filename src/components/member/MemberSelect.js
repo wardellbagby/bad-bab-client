@@ -1,6 +1,6 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
-import {selectMember} from "../actions";
+import {selectMember} from "../../actions";
 import {IonLabel} from "@ionic/react";
 
 export default function MemberSelect({member, highlighted: isNewMember}) {

@@ -1,5 +1,4 @@
 import React from 'react';
-import {selectPassword} from "../actions";
 import {IonButton} from "@ionic/react";
 
 const passwords = [
@@ -18,15 +17,9 @@ const passwords = [
     'cat'
 ];
 
-export default function PasswordSelector({selectedMember, selectedPassword, updatePassword}) {
+export default function PasswordSelector({selectedPassword, updatePassword}) {
     const colorForPassword = (password) => password === selectedPassword ? "medium" : "light";
-    const handleUpdatePassword = (password) => () => {
-        if (updatePassword) {
-            return updatePassword(password);
-        }
-
-        return selectPassword(selectedMember, password);
-    };
+    const handleUpdatePassword = (password) => () => updatePassword(password);
 
     return (
         <div className="d-inline-flex flex-wrap justify-content-center">

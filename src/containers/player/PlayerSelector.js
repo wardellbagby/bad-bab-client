@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {requestPlayers} from "../actions";
-import PlayerSelect from "../components/PlayerSelect";
+import {requestPlayers} from "../../actions";
+import PlayerSelect from "../../components/player/PlayerSelect";
 
 import {IonLabel, IonList, IonListHeader} from '@ionic/react';
 

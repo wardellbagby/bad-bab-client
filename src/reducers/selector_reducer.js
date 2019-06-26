@@ -7,7 +7,6 @@ import {
     FILTER_PLAYER,
     REMOVE_PLAYER,
     SELECT_MEMBER,
-    SELECT_PASSWORD,
     SELECT_PLAYER,
     START_UPDATING_PLAYER,
     UPDATE_PLAYER
@@ -51,11 +50,6 @@ export default function (state = defaultState, action) {
             const member = action.payload;
 
             return {...state, memberToCreate: member};
-
-        case SELECT_PASSWORD:
-            const password = action.payload;
-
-            return {...state, password};
 
         case CANCEL_MEMBER_CREATE:
             return {...state, memberToCreate: null};

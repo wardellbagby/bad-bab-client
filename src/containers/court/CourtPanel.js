@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {requestCourts, requestPlayers} from "../../actions";
-import Court from "../../components/Court";
+import Court from "../../components/court/Court";
 import {IonLabel, IonList, IonListHeader} from "@ionic/react";
 export { CourtCreateModal } from '../../components/court/CourtCreateModal';
 

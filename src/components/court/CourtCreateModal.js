@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCourt, deselectPlayers } from "../../actions";
-import PlayerSelector from '../../containers/PlayerSelector';
+import PlayerSelector from '../../containers/player/PlayerSelector';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from '../Modal';
 import { IonInput, IonItem } from "@ionic/react";
 

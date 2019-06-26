@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { memberFilterChanged, requestMembers } from "../../actions";
-import MemberSelect from "../../components/MemberSelect";
+import MemberSelect from "../../components/member/MemberSelect";
 import { IonCol, IonFooter, IonGrid, IonRow, IonSearchbar, IonToolbar } from "@ionic/react";
 export {MemberCreateModal} from '../../components/member/MemberCreateModal';
 

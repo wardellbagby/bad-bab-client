@@ -1,12 +1,15 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {playerFilterChanged, requestPlayers} from "../../actions";
+import {requestPlayers} from "../../actions";
 import PlayerSlider from "../../components/player/PlayerSlider";
 import {Modal, ModalBody} from '../../components/Modal';
 
-import {IonFooter, IonLabel, IonList, IonListHeader, IonSearchbar, IonToolbar} from '@ionic/react';
+import {IonLabel, IonList, IonListHeader} from '@ionic/react';
 import PlayerEditModal from "../../components/player/PlayerEditModal";
 import PlayerCreateModal from "../../components/player/PlayerCreateModal";
+
+export {PlayerPanelFooter} from "../../components/player/PlayerPanelFooter";
+
 
 export default function PlayerPanel() {
     const [reservedPlayers, availablePlayers] = useSelector(state => state.people.filteredPlayers || state.people.partitionedPlayers);
@@ -32,24 +35,6 @@ export default function PlayerPanel() {
                 <PlayerSlider player={player} key={player._id}/>
             ))}
         </IonList>
-    );
-}
-
-export function PlayerSelectorFooter() {
-    const dispatch = useDispatch();
-    const playerNameFilter = useSelector(state => state.selected.playerNameFilter);
-
-    const updateFilter = (event) => dispatch(playerFilterChanged(event.target.value));
-
-    return (
-        <IonFooter>
-            <IonToolbar>
-                <IonSearchbar style={{'--placeholder-color': 'red'}}
-                              placeholder="Filter or add Player"
-                              value={playerNameFilter}
-                              onIonInput={updateFilter}/>
-            </IonToolbar>
-        </IonFooter>
     );
 }
 
