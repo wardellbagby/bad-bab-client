@@ -44,8 +44,8 @@ export const CLEAR_TOAST = "CLEAR_TOAST";
 
 // Setup the content-type and make sure data is form-encoded.
 axios.interceptors.request.use((config) => {
-    config.headers["Content-type"] = 'application/x-www-form-urlencoded'
-    config.data = qs.stringify(config.data)
+    config.headers["Content-type"] = 'application/x-www-form-urlencoded';
+    config.data = qs.stringify(config.data);
     return config;
 });
 
