@@ -5,18 +5,15 @@ import {Modal, ModalBody} from '../../components/Modal';
 
 export function MemberCreateModal() {
     const memberToCreate = useSelector(state => state.selected.memberToCreate);
-    let body = null;
 
-    if (memberToCreate) {
-        body = (
-            <MemberPasswordForm member={memberToCreate}/>
-        );
+    if (memberToCreate === null) {
+        return <span/>;
     }
 
     return (
         <Modal>
             <ModalBody>
-                {body}
+                <MemberPasswordForm member={memberToCreate}/>
             </ModalBody>
         </Modal>
     );

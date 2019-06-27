@@ -4,7 +4,7 @@ import {memberFilterChanged, requestMembers} from "../../actions";
 import MemberSelect from "../../components/member/MemberSelect";
 import {IonCol, IonFooter, IonGrid, IonRow, IonSearchbar, IonToolbar} from "@ionic/react";
 
-export {MemberCreateModal} from '../../components/member/MemberCreateModal';
+import {MemberCreateModal} from '../../components/member/MemberCreateModal';
 
 export default function MemberSelector() {
     const memberChunks = useSelector(state => state.people.filteredMembers || state.people.chunkedMembers);
@@ -33,9 +33,13 @@ export default function MemberSelector() {
     }
 
     return (
-        <IonGrid title="Members">
-            {memberChunks.map(createRow)}
-        </IonGrid>
+        <>
+            <IonGrid title="Members">
+                {memberChunks.map(createRow)}
+            </IonGrid>
+
+            <MemberCreateModal/>
+        </>
     );
 }
 

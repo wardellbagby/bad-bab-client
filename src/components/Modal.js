@@ -1,10 +1,10 @@
 import React from 'react';
 import {IonButton, IonIcon, IonItem} from "@ionic/react";
 
-export function Modal({ children }) {
+export function Modal({ children = <ModalBody/>, modalId = "pageModal" }) {
     return (
-        <div className="modal fade" id="pageModal"
-             role="dialog" aria-labelledby="pageModalScrollableTitle" aria-hidden="true" data-backdrop="false">
+        <div className="modal fade" id={modalId}
+             role="dialog" data-backdrop="false">
             <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
                 <div className="modal-content">
                     {children}

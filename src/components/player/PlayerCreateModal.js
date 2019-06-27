@@ -3,7 +3,7 @@ import {cancelPlayerUpdate, createPlayer} from "../../actions";
 import React, {useState} from "react";
 import {IonCardHeader, IonCardTitle, IonInput, IonItem, IonItemDivider, IonLabel} from "@ionic/react";
 import PasswordSelector from "../../containers/PasswordSelector";
-import {ModalFooter} from "../Modal";
+import {Modal, ModalBody, ModalFooter} from "../Modal";
 
 export default function PlayerAddModal() {
     const dispatch = useDispatch();
@@ -16,33 +16,35 @@ export default function PlayerAddModal() {
     const handleNameChange = (e) => updateName(e.target.value);
 
     return (
-        <>
-            <IonCardHeader className="mb-2">
-                <IonCardTitle>Create new Player</IonCardTitle>
-            </IonCardHeader>
+        <Modal>
+            <ModalBody>
+                <IonCardHeader className="mb-2">
+                    <IonCardTitle>Create new Player</IonCardTitle>
+                </IonCardHeader>
 
-            <IonItem lines="none">
-                <span className="mr-2 text-muted">Name:</span>
-                <IonInput placeholder="Enter Name"
-                          value={name}
-                          onIonChange={handleNameChange}/>
-            </IonItem>
+                <IonItem lines="none">
+                    <span className="mr-2 text-muted">Name:</span>
+                    <IonInput placeholder="Enter Name"
+                              value={name}
+                              onIonChange={handleNameChange}/>
+                </IonItem>
 
-            <PasswordSelector selectedPassword={password}
-                              updatePassword={updatePassword}/>
+                <PasswordSelector selectedPassword={password}
+                                  updatePassword={updatePassword}/>
 
-            <IonItemDivider/>
+                <IonItemDivider/>
 
-            <IonItem lines="full">
-                <IonLabel><span className="text-muted">Is this correct?</span> {name} : {password}
-                </IonLabel>
-            </IonItem>
+                <IonItem lines="full">
+                    <IonLabel><span className="text-muted">Is this correct?</span> {name} : {password}
+                    </IonLabel>
+                </IonItem>
+            </ModalBody>
 
 
             <ModalFooter
                 onCancel={handleCancel}
                 onSuccess={handlePlayerCreate}/>
-        </>
+        </Modal>
     );
 
 }

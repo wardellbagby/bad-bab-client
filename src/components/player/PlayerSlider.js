@@ -25,7 +25,7 @@ export default function PlayerSlider({ player }) {
                 <IonItemOption color="light"
                                onClick={handleEditButton}
                                data-toggle="modal"
-                               data-target="#pageModal">
+                               data-target="#playerEditModal">
                     <IonIcon slot="icon-only" name="create"/>
                 </IonItemOption>
 

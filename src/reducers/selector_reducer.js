@@ -15,9 +15,9 @@ import _ from 'lodash';
 
 const defaultState = {
     players: {},
-    memberToCreate: null,
+    memberToCreate: {},
     password: null,
-    playerToUpdate: null,
+    playerToUpdate: {},
     playerNameFilter: null,
     memberNameFilter: null,
     playerNames: []
@@ -41,10 +41,10 @@ export default function (state = defaultState, action) {
             return { ...state, playerToUpdate: player };
 
         case UPDATE_PLAYER:
-            return { ...state, playerToUpdate: null };
+            return { ...state, playerToUpdate: {} };
 
         case CANCEL_PLAYER_UPDATE:
-            return { ...state, playerToUpdate: null };
+            return { ...state, playerToUpdate: {} };
 
         case SELECT_MEMBER:
             const member = action.payload;
@@ -52,7 +52,7 @@ export default function (state = defaultState, action) {
             return { ...state, memberToCreate: member };
 
         case CANCEL_MEMBER_CREATE:
-            return { ...state, memberToCreate: null };
+            return { ...state, memberToCreate: {} };
 
         case REMOVE_PLAYER:
             return { ...state, playerNameFilter: null };

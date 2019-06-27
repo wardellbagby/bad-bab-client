@@ -4,7 +4,7 @@ import {requestCourts, requestPlayers} from "../../actions";
 import Court from "../../components/court/Court";
 import {IonLabel, IonList, IonListHeader} from "@ionic/react";
 
-export {CourtCreateModal} from '../../components/court/CourtCreateModal';
+import {CourtCreateModal} from '../../components/court/CourtCreateModal';
 
 export default function Courts() {
     const { current, upcoming } = useSelector(state => state.courts);
@@ -42,6 +42,8 @@ export default function Courts() {
 
                 {courtsFor(upcoming, false)}
             </IonList>
+
+            <CourtCreateModal/>
         </>
     );
 }
