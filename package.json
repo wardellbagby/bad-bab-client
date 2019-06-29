@@ -2,7 +2,7 @@
   "name": "bad-bab-client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://myname.github.io/bab-web",
+  "homepage": "http://docjava.github.io/bab-web",
   "dependencies": {
     "@ionic/react": "0.0.6-3",
     "@types/jest": "^24.0.15",
