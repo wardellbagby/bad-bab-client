@@ -12,6 +12,7 @@ import {
     UPDATE_PLAYER
 } from "../actions/index";
 import _ from 'lodash';
+import {SELECT_COURT_RANDOMS} from "../actions";
 
 const defaultState = {
     players: {},
@@ -20,7 +21,9 @@ const defaultState = {
     playerToUpdate: {},
     playerNameFilter: null,
     memberNameFilter: null,
-    playerNames: []
+    playerNames: [],
+    useCourtRandoms: false,
+    courtCreatable: false
 };
 
 export default function (state = defaultState, action) {
@@ -32,7 +35,14 @@ export default function (state = defaultState, action) {
             player = action.payload;
             const players = updatePlayerSelections({ ...state.players }, player);
 
-            return { ...state, players, playerNames: _.map(players, (player) => _.toLower(player.name)) };
+            return {
+                ...state,
+                players,
+                playerNames: _.map(players, (player) => _.toLower(player.name)),
+                useCourtRandoms: false,
+                courtCreatable: _.size(players) >= 2
+            };
+
         case DESELECT_PLAYERS:
             return { ...state, players: {}, playerNames: [] };
 
@@ -50,6 +60,11 @@ export default function (state = defaultState, action) {
             const member = action.payload;
 
             return { ...state, memberToCreate: member };
+
+        case SELECT_COURT_RANDOMS:
+            const futureUseCourtRandoms = !state.useCourtRandoms;
+
+            return { ...state, useCourtRandoms: futureUseCourtRandoms, courtCreatable: futureUseCourtRandoms };
 
         case CANCEL_MEMBER_CREATE:
             return { ...state, memberToCreate: {} };

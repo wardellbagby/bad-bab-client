@@ -11,10 +11,12 @@ export function CourtCreateModal() {
     const [courtNumber, setCourtNumber] = useState(0);
     const [delay, setDelay] = useState(0);
     const names = useSelector(state => state.selected.playerNames);
+    const randoms = useSelector(state => state.selected.useCourtRandoms);
+    const courtCreatable = useSelector(state => state.selected.courtCreatable);
 
     const handleCancel = () => dispatch(deselectPlayers());
     const handleCreateCourt = () => {
-        dispatch(createCourt({ courtNumber, names, delay }));
+        dispatch(createCourt({ courtNumber, names, delay, randoms }));
         dispatch(deselectPlayers());
     };
 
@@ -42,7 +44,9 @@ export function CourtCreateModal() {
                 <PlayerSelector/>
             </ModalBody>
 
-            <ModalFooter onCancel={handleCancel} onSuccess={handleCreateCourt}/>
+            <ModalFooter onCancel={handleCancel}
+                         onSuccess={handleCreateCourt}
+                         successEnabled={courtCreatable}/>
 
         </Modal>
     );

@@ -22,7 +22,7 @@ export function ModalHeader({ children }) {
     );
 }
 
-export function ModalFooter({ onCancel, onSuccess }) {
+export function ModalFooter({ onCancel, onSuccess, successEnabled = true }) {
     return (
         <div className="modal-footer">
             <IonItem className="w-100" lines="none">
@@ -37,6 +37,7 @@ export function ModalFooter({ onCancel, onSuccess }) {
 
                 <IonButton color="success"
                            onClick={onSuccess}
+                           disabled={!successEnabled}
                            slot="end"
                            data-dismiss="modal"
                            size="medium"
