@@ -3,7 +3,7 @@ import {CREATE_COURT, FETCH_COURTS} from "../actions/index";
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
-const now = new Date();
+const now = () => new Date();
 
 export default function (state = { current: [], upcoming: [], reservations: [] }, action) {
 
@@ -54,7 +54,7 @@ function courtInTimezone(court) {
         startAt: moment(court.startAt).tz('America/Los_Angeles'),
         endAt: moment(court.endAt).tz('America/Los_Angeles'),
         randoms: court.randoms,
-        isCurrentCourt: now - court.startAt >= 0
+        isCurrentCourt: now() - court.startAt >= 0
     }
 }
 
@@ -78,7 +78,7 @@ function mergeReservations(reservations) {
 }
 
 function formatCurrentCourt({ courtNumber, endAt }) {
-    const duration = moment.duration(endAt - now);
+    const duration = moment.duration(endAt - now());
     return {
         courtNumber,
         time: `${formatTime(duration)} remaining`
@@ -86,7 +86,7 @@ function formatCurrentCourt({ courtNumber, endAt }) {
 }
 
 function formatUpcomingCourt({ courtNumber, startAt }) {
-    const duration = moment.duration(startAt - now);
+    const duration = moment.duration(startAt - now());
 
     return {
         courtNumber,

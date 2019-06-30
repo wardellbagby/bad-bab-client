@@ -6,13 +6,22 @@ import {IonLabel, IonList, IonListHeader} from "@ionic/react";
 
 import {CourtCreateModal} from '../../components/court/CourtCreateModal';
 
-export default function Courts() {
+const twoMinutesMillis = 120000;
+
+export default function CourtPanel() {
     const { current, upcoming } = useSelector(state => state.courts);
     const dispatch = useDispatch();
 
-    useEffect(() => {
+    function updateScreenInformation() {
         dispatch(requestCourts());
         dispatch(requestPlayers());
+    }
+
+    useEffect( updateScreenInformation, []);
+
+    useEffect(() => {
+        const interval = setInterval(updateScreenInformation, twoMinutesMillis);
+        return () => clearInterval(interval);
     }, []);
 
     const courtsFor = (courtList, isCurrentCourt) => {
