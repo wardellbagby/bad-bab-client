@@ -5,13 +5,18 @@ import MemberSelect from "../../components/member/MemberSelect";
 import {IonCol, IonFooter, IonGrid, IonRow, IonSearchbar, IonToolbar} from "@ionic/react";
 
 import {MemberCreateModal} from '../../components/member/MemberCreateModal';
+import Refresher from "../../components/Refresher";
 
 export default function MemberSelector() {
     const memberChunks = useSelector(state => state.people.filteredMembers || state.people.chunkedMembers);
     const dispatch = useDispatch();
 
+    function updateScreenInformation() {
+        return dispatch(requestMembers());
+    }
+
     useEffect(() => {
-        dispatch(requestMembers());
+        updateScreenInformation()
     }, []);
 
     const createRow = (memberChunk) => (
@@ -34,6 +39,8 @@ export default function MemberSelector() {
 
     return (
         <>
+            <Refresher updateScreenInfoCallBack={updateScreenInformation}/>
+
             <IonGrid title="Members">
                 {memberChunks.map(createRow)}
             </IonGrid>

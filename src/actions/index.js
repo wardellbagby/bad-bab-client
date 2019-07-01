@@ -1,6 +1,5 @@
 import axios from "axios";
 import qs from "querystring";
-import sampleMemberData from '../sample-data/members'
 
 const BASE_URL = "https://bab.moepas.com/api/";
 
@@ -50,8 +49,8 @@ axios.interceptors.request.use((config) => {
 });
 
 export function requestMembers() {
-    // const request = getRequest(MEMBERS);
-    const request = { data: sampleMemberData };
+    const request = getRequest(MEMBERS);
+    // const request = { data: sampleMemberData };
 
     return {
         type: FETCH_MEMBERS,

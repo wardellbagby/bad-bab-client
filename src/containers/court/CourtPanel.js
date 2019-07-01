@@ -5,6 +5,7 @@ import Court from "../../components/court/Court";
 import {IonLabel, IonList, IonListHeader} from "@ionic/react";
 
 import {CourtCreateModal} from '../../components/court/CourtCreateModal';
+import Refresher from "../../components/Refresher";
 
 const twoMinutesMillis = 120000;
 
@@ -13,11 +14,12 @@ export default function CourtPanel() {
     const dispatch = useDispatch();
 
     function updateScreenInformation() {
-        dispatch(requestCourts());
-        dispatch(requestPlayers());
+        return dispatch(requestCourts()).then(() => dispatch(requestPlayers()));
     }
 
-    useEffect( updateScreenInformation, []);
+    useEffect(() => {
+        updateScreenInformation()
+    }, []);
 
     useEffect(() => {
         const interval = setInterval(updateScreenInformation, twoMinutesMillis);
@@ -38,6 +40,8 @@ export default function CourtPanel() {
 
     return (
         <>
+            <Refresher updateScreenInfoCallBack={updateScreenInformation}/>
+
             <IonList>
                 <IonListHeader>
                     <IonLabel>Current Courts</IonLabel>
