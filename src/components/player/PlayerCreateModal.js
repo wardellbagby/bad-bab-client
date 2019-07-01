@@ -1,5 +1,5 @@
 import {useDispatch} from "react-redux";
-import {cancelPlayerUpdate, createPlayer} from "../../actions";
+import {createPlayer} from "../../actions";
 import React, {useState} from "react";
 import {IonCardHeader, IonCardTitle, IonInput, IonItem, IonItemDivider, IonLabel} from "@ionic/react";
 import PasswordSelector from "../../containers/PasswordSelector";
@@ -11,9 +11,16 @@ export default function PlayerAddModal() {
     const [password, updatePassword] = useState("");
     const [name, updateName] = useState("");
 
-    const handleCancel = () => dispatch(cancelPlayerUpdate());
-    const handlePlayerCreate = () => dispatch(createPlayer({ name, password }));
+    const clearChanges = () => {
+        updatePassword("");
+        updateName("");
+    };
+    const handlePlayerCreate = () => {
+        dispatch(createPlayer({ name, password }));
+        clearChanges();
+    };
     const handleNameChange = (e) => updateName(e.target.value);
+    const playerCreatable = name && password;
 
     return (
         <Modal>
@@ -42,8 +49,9 @@ export default function PlayerAddModal() {
 
 
             <ModalFooter
-                onCancel={handleCancel}
-                onSuccess={handlePlayerCreate}/>
+                onCancel={clearChanges}
+                onSuccess={handlePlayerCreate}
+                successEnabled={playerCreatable}/>
         </Modal>
     );
 
