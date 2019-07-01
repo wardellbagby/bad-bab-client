@@ -32,7 +32,7 @@ export function ModalFooter({ onCancel, onSuccess, successEnabled = true }) {
                            size="medium"
                            data-dismiss="modal"
                 >
-                    <IonIcon slot="icon-only" name="remove-circle"/>
+                    <IonIcon slot="icon-only" name="close-circle"/>
                 </IonButton>
 
                 <IonButton color="success"
