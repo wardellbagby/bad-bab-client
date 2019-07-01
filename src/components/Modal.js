@@ -1,10 +1,10 @@
 import React from 'react';
 import {IonButton, IonIcon, IonItem} from "@ionic/react";
 
-export function Modal({children}) {
+export function Modal({ children = <ModalBody/>, modalId = "pageModal" }) {
     return (
-        <div className="modal fade" id="pageModal"
-             role="dialog" aria-labelledby="pageModalScrollableTitle" aria-hidden="true" data-backdrop="false">
+        <div className="modal fade" id={modalId}
+             role="dialog" data-backdrop="false">
             <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
                 <div className="modal-content">
                     {children}
@@ -14,7 +14,7 @@ export function Modal({children}) {
     );
 }
 
-export function ModalHeader({children}) {
+export function ModalHeader({ children }) {
     return (
         <div className="modal-header">
             {children}
@@ -22,7 +22,7 @@ export function ModalHeader({children}) {
     );
 }
 
-export function ModalFooter({onCancel, onSuccess}) {
+export function ModalFooter({ onCancel, onSuccess, successEnabled = true }) {
     return (
         <div className="modal-footer">
             <IonItem className="w-100" lines="none">
@@ -32,11 +32,12 @@ export function ModalFooter({onCancel, onSuccess}) {
                            size="medium"
                            data-dismiss="modal"
                 >
-                    <IonIcon slot="icon-only" name="remove-circle"/>
+                    <IonIcon slot="icon-only" name="close-circle"/>
                 </IonButton>
 
                 <IonButton color="success"
                            onClick={onSuccess}
+                           disabled={!successEnabled}
                            slot="end"
                            data-dismiss="modal"
                            size="medium"
@@ -48,7 +49,7 @@ export function ModalFooter({onCancel, onSuccess}) {
     );
 }
 
-export function ModalBody({children}) {
+export function ModalBody({ children }) {
     return (
         <div className="modal-body">
             {children}

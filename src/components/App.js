@@ -1,9 +1,9 @@
 /* eslint-disable default-case */
 import React, {useState} from 'react';
 import '../style/App.css';
-import MemberPane, {MemberCreateModal, MemberSelectorFooter} from '../containers/member/MemberPanel';
-import PlayerPanel, {PlayerAddModal, PlayerSelectorFooter} from '../containers/player/PlayerPanel';
-import CourtPanel, {CourtCreateModal} from '../containers/court/CourtPanel';
+import MemberPane, {MemberSelectorFooter} from '../containers/member/MemberPanel';
+import PlayerPanel, {PlayerPanelFooter} from '../containers/player/PlayerPanel';
+import CourtPanel from '../containers/court/CourtPanel';
 import {
     IonApp,
     IonContent,
@@ -31,24 +31,29 @@ export default function App() {
 
     let customFooter = null;
     let pane = null;
-    let modal = null;
+
+    let floatingActionButton = (
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
+            <IonFabButton data-toggle="modal" data-target="#pageModal">
+                <IonIcon name="add"/>
+            </IonFabButton>
+        </IonFab>
+    );
 
     switch (selectedPane) {
         case PLAYER_PANE:
-            customFooter = <PlayerSelectorFooter/>;
             pane = <PlayerPanel/>;
-            modal = <PlayerAddModal />;
+            customFooter = <PlayerPanelFooter/>;
             break;
 
         case COURT_PANE:
             pane = <CourtPanel/>;
-            modal = <CourtCreateModal/>;
             break;
 
         case MEMBER_PANE:
             customFooter = <MemberSelectorFooter/>;
             pane = <MemberPane/>;
-            modal = <MemberCreateModal />;
+            floatingActionButton = null;
     }
 
     const header = (
@@ -73,13 +78,7 @@ export default function App() {
         <IonContent fullScreen>
             {pane}
 
-            <IonFab vertical="bottom" horizontal="end" slot="fixed">
-                <IonFabButton data-toggle="modal" data-target="#pageModal">
-                    <IonIcon name="add"/>
-                </IonFabButton>
-            </IonFab>
-
-            {modal}
+            {floatingActionButton}
 
             <Toast/>
         </IonContent>

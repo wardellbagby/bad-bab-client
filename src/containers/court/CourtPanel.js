@@ -1,17 +1,29 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {requestCourts, requestPlayers} from "../../actions";
-import Court from "../../components/Court";
+import Court from "../../components/court/Court";
 import {IonLabel, IonList, IonListHeader} from "@ionic/react";
-export { CourtCreateModal } from '../../components/court/CourtCreateModal';
 
-export default function Courts() {
-    const {current, upcoming} = useSelector(state => state.courts);
+import {CourtCreateModal} from '../../components/court/CourtCreateModal';
+import Refresher from "../../components/Refresher";
+
+const twoMinutesMillis = 120000;
+
+export default function CourtPanel() {
+    const { current, upcoming } = useSelector(state => state.courts);
     const dispatch = useDispatch();
 
+    function updateScreenInformation() {
+        return dispatch(requestCourts()).then(() => dispatch(requestPlayers()));
+    }
+
     useEffect(() => {
-        dispatch(requestCourts());
-        dispatch(requestPlayers());
+        updateScreenInformation()
+    }, []);
+
+    useEffect(() => {
+        const interval = setInterval(updateScreenInformation, twoMinutesMillis);
+        return () => clearInterval(interval);
     }, []);
 
     const courtsFor = (courtList, isCurrentCourt) => {
@@ -28,6 +40,8 @@ export default function Courts() {
 
     return (
         <>
+            <Refresher updateScreenInfoCallBack={updateScreenInformation}/>
+
             <IonList>
                 <IonListHeader>
                     <IonLabel>Current Courts</IonLabel>
@@ -41,6 +55,8 @@ export default function Courts() {
 
                 {courtsFor(upcoming, false)}
             </IonList>
+
+            <CourtCreateModal/>
         </>
     );
 }

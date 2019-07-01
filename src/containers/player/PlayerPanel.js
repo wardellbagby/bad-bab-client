@@ -1,75 +1,50 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {playerFilterChanged, requestPlayers} from "../../actions";
+import {requestPlayers} from "../../actions";
 import PlayerSlider from "../../components/player/PlayerSlider";
-import {Modal, ModalBody} from '../../components/Modal';
 
-import {IonFooter, IonLabel, IonList, IonListHeader, IonSearchbar, IonToolbar} from '@ionic/react';
+import {IonLabel, IonList, IonListHeader} from '@ionic/react';
 import PlayerEditModal from "../../components/player/PlayerEditModal";
 import PlayerCreateModal from "../../components/player/PlayerCreateModal";
+import Refresher from "../../components/Refresher";
+
+export {PlayerPanelFooter} from "../../components/player/PlayerPanelFooter";
+
 
 export default function PlayerPanel() {
     const [reservedPlayers, availablePlayers] = useSelector(state => state.people.filteredPlayers || state.people.partitionedPlayers);
     const dispatch = useDispatch();
 
+    function updateScreenInformation() {
+        return dispatch(requestPlayers());
+    }
+
     useEffect(() => {
-        dispatch(requestPlayers());
+        updateScreenInformation()
     }, []);
 
     return (
-        <IonList>
-            <IonListHeader>
-                <IonLabel>Available players</IonLabel>
-            </IonListHeader>
-            {availablePlayers.map(player => (
-                <PlayerSlider player={player} key={player._id}/>
-            ))}
+        <>
+            <Refresher updateScreenInfoCallBack={updateScreenInformation}/>
 
-            <IonListHeader>
-                <IonLabel>Players in use</IonLabel>
-            </IonListHeader>
-            {reservedPlayers.map(player => (
-                <PlayerSlider player={player} key={player._id}/>
-            ))}
-        </IonList>
-    );
-}
+            <IonList>
+                <IonListHeader>
+                    <IonLabel>Available players</IonLabel>
+                </IonListHeader>
+                {availablePlayers.map(player => (
+                    <PlayerSlider player={player} key={player._id}/>
+                ))}
 
-export function PlayerSelectorFooter() {
-    const dispatch = useDispatch();
-    const playerNameFilter = useSelector(state => state.selected.playerNameFilter);
+                <IonListHeader>
+                    <IonLabel>Players in use</IonLabel>
+                </IonListHeader>
+                {reservedPlayers.map(player => (
+                    <PlayerSlider player={player} key={player._id}/>
+                ))}
+            </IonList>
 
-    const updateFilter = (event) => dispatch(playerFilterChanged(event.target.value));
-
-    return (
-        <IonFooter>
-            <IonToolbar>
-                <IonSearchbar style={{'--placeholder-color': 'red'}}
-                              placeholder="Filter or add Player"
-                              value={playerNameFilter}
-                              onIonInput={updateFilter}/>
-            </IonToolbar>
-        </IonFooter>
-    );
-}
-
-export function PlayerAddModal() {
-
-    const playerToUpdate = useSelector(state => state.selected.playerToUpdate);
-    let body = null;
-
-    if (playerToUpdate) {
-        body = <PlayerEditModal player={playerToUpdate}/>;
-
-    } else {
-        body = <PlayerCreateModal/>;
-    }
-
-    return (
-        <Modal>
-            <ModalBody>
-                {body}
-            </ModalBody>
-        </Modal>
+            <PlayerEditModal/>
+            <PlayerCreateModal/>
+        </>
     );
 }

@@ -7,21 +7,23 @@ import {
     FILTER_PLAYER,
     REMOVE_PLAYER,
     SELECT_MEMBER,
-    SELECT_PASSWORD,
     SELECT_PLAYER,
     START_UPDATING_PLAYER,
     UPDATE_PLAYER
 } from "../actions/index";
 import _ from 'lodash';
+import {SELECT_COURT_RANDOMS} from "../actions";
 
 const defaultState = {
     players: {},
-    memberToCreate: null,
+    memberToCreate: {},
     password: null,
-    playerToUpdate: null,
+    playerToUpdate: {},
     playerNameFilter: null,
     memberNameFilter: null,
-    playerNames: []
+    playerNames: [],
+    useCourtRandoms: false,
+    courtCreatable: false
 };
 
 export default function (state = defaultState, action) {
@@ -31,47 +33,54 @@ export default function (state = defaultState, action) {
     switch (action.type) {
         case SELECT_PLAYER:
             player = action.payload;
-            const players = updatePlayerSelections({...state.players}, player);
+            const players = updatePlayerSelections({ ...state.players }, player);
 
-            return {...state, players, playerNames: _.map(players, (player) => _.toLower(player.name))};
+            return {
+                ...state,
+                players,
+                playerNames: _.map(players, (player) => _.toLower(player.name)),
+                useCourtRandoms: false,
+                courtCreatable: _.size(players) >= 2
+            };
+
         case DESELECT_PLAYERS:
-            return {...state, players: {}, playerNames: []};
+            return { ...state, players: {}, playerNames: [] };
 
         case START_UPDATING_PLAYER:
             player = action.payload;
-            return {...state, playerToUpdate: player};
+            return { ...state, playerToUpdate: player };
 
         case UPDATE_PLAYER:
-            return {...state, playerToUpdate: null};
+            return { ...state, playerToUpdate: {} };
 
         case CANCEL_PLAYER_UPDATE:
-            return {...state, playerToUpdate: null};
+            return { ...state, playerToUpdate: {} };
 
         case SELECT_MEMBER:
             const member = action.payload;
 
-            return {...state, memberToCreate: member};
+            return { ...state, memberToCreate: member };
 
-        case SELECT_PASSWORD:
-            const password = action.payload;
+        case SELECT_COURT_RANDOMS:
+            const futureUseCourtRandoms = !state.useCourtRandoms;
 
-            return {...state, password};
+            return { ...state, useCourtRandoms: futureUseCourtRandoms, courtCreatable: futureUseCourtRandoms };
 
         case CANCEL_MEMBER_CREATE:
-            return {...state, memberToCreate: null};
+            return { ...state, memberToCreate: {} };
 
         case REMOVE_PLAYER:
-            return {...state, playerNameFilter: null};
+            return { ...state, playerNameFilter: null };
 
         case FILTER_PLAYER:
             const playerNameFilter = action.payload;
 
-            return {...state, playerNameFilter};
+            return { ...state, playerNameFilter };
 
         case FILTER_MEMBER:
             const memberNameFilter = action.payload;
 
-            return {...state, memberNameFilter};
+            return { ...state, memberNameFilter };
     }
 
     return state;

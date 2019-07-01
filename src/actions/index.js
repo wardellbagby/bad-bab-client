@@ -1,6 +1,5 @@
 import axios from "axios";
 import qs from "querystring";
-import sampleMemberData from '../sample-data/members'
 
 const BASE_URL = "https://bab.moepas.com/api/";
 
@@ -32,7 +31,7 @@ export const DESELECT_PLAYERS = 'DESELECT_PLAYERS';
 export const START_UPDATING_PLAYER = 'START_UPDATING_PLAYER';
 export const CANCEL_PLAYER_UPDATE = 'CANCEL_PLAYER_UPDATE';
 export const SELECT_MEMBER = 'SELECT_MEMBER';
-export const SELECT_PASSWORD = 'SELECT_PASSWORD';
+export const SELECT_COURT_RANDOMS = 'SELECT_COURT_RANDOMS';
 
 export const FILTER_PLAYER = 'FILTER_PLAYER';
 export const FILTER_MEMBER = 'FILTER_MEMBER';
@@ -44,14 +43,14 @@ export const CLEAR_TOAST = "CLEAR_TOAST";
 
 // Setup the content-type and make sure data is form-encoded.
 axios.interceptors.request.use((config) => {
-    config.headers["Content-type"] = 'application/x-www-form-urlencoded'
-    config.data = qs.stringify(config.data)
+    config.headers["Content-type"] = 'application/x-www-form-urlencoded';
+    config.data = qs.stringify(config.data);
     return config;
 });
 
 export function requestMembers() {
-    // const request = getRequest(MEMBERS);
-    const request = { data: sampleMemberData };
+    const request = getRequest(MEMBERS);
+    // const request = { data: sampleMemberData };
 
     return {
         type: FETCH_MEMBERS,
@@ -109,11 +108,9 @@ export function selectMember(member) {
     };
 }
 
-export function selectPassword(chosenMember, password) {
-    // todo: run call to create a player here, maybe change function name
+export function selectCourtRandoms() {
     return {
-        type: SELECT_PASSWORD,
-        payload: password
+        type: SELECT_COURT_RANDOMS
     };
 }
 
