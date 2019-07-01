@@ -62,7 +62,7 @@ function reservationsCanBeCombined(previous, next) {
     return previous &&
         previous.courtNumber === next.courtNumber &&
         previous.randoms === next.randoms &&
-        previous.startAt.milliseconds() === next.endAt.milliseconds()
+        previous.startAt.isSame(next.endAt)
 }
 
 function mergeReservations(reservations) {
